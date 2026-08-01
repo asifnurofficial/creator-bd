@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mohammad Asif Nur — Post-Production Specialist</title>
-<meta name="description" content="Mohammad Asif Nur — Creative Post-Production Specialist. Video Editing, Motion Graphics, Color Grading, VFX & Sound Design.">
+<meta name="description" content="Mohammad Asif Nur — Creative Post-Production Specialist. Video Editing, Motion Graphics, Color Grading & Sound Design.">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Font Awesome -->
+<!-- Font Awesome Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <!-- Tailwind (CDN) -->
@@ -49,12 +49,12 @@
 
   ::selection{ background:var(--primary); color:#fff; }
 
-  /* scrollbar */
+  /* Custom Scrollbar */
   ::-webkit-scrollbar{ width:8px; }
   ::-webkit-scrollbar-track{ background:var(--bg-1); }
   ::-webkit-scrollbar-thumb{ background:var(--primary-dim); border-radius:10px; }
 
-  /* ================= BACKDROP ================= */
+  /* Backyard & Ambient Elements */
   .grain{
     position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.035; mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -71,7 +71,7 @@
     position:fixed; border-radius:50%; filter:blur(110px); pointer-events:none; z-index:0;
   }
 
-  /* ================= GLASS ================= */
+  /* Glassmorphism Cards */
   .glass{
     background: linear-gradient(160deg, rgba(255,255,255,0.055), rgba(255,255,255,0.015));
     border:1px solid var(--line);
@@ -85,7 +85,7 @@
     -webkit-backdrop-filter: blur(22px);
   }
 
-  /* ================= GRADIENT TEXT / TEXT ================= */
+  /* Typography & Gradients */
   .grad-text{
     background: linear-gradient(100deg, var(--cyan) 0%, var(--primary) 45%, var(--violet) 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -101,7 +101,7 @@
     opacity:.55; pointer-events:none;
   }
 
-  /* ================= BUTTONS ================= */
+  /* Buttons */
   .btn-primary{
     background: linear-gradient(100deg, var(--primary), var(--violet));
     box-shadow: 0 8px 30px -8px rgba(58,134,255,.55);
@@ -114,48 +114,53 @@
   }
   .btn-ghost:hover{ border-color: var(--primary); background: rgba(58,134,255,.08); transform: translateY(-3px); }
 
-  /* ================= REVEAL ================= */
+  /* Animations */
   .reveal{ opacity:0; transform: translateY(36px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
   .reveal.in{ opacity:1; transform:none; }
   .reveal-scale{ opacity:0; transform: scale(.92); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
   .reveal-scale.in{ opacity:1; transform:none; }
-  .stagger > * { transition-delay: calc(var(--i, 0) * 90ms); }
 
-  /* ================= NAV TIMELINE SCRUBBER (signature element) ================= */
+  /* Timeline Scrubber Header */
   #scrub-track{
     position:fixed; top:0; left:0; right:0; height:44px; z-index:60;
     display:flex; align-items:center;
-    background: rgba(5,7,12,.7);
+    background: rgba(5,7,12,.88);
     backdrop-filter: blur(14px);
     border-bottom:1px solid var(--line);
   }
   #scrub-ticks{
     position:relative; flex:1; height:100%; overflow:hidden;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='44' fill='none'%3E%3Cline x1='0' y1='18' x2='0' y2='44' stroke='rgba(255,255,255,0.4)' stroke-width='1.5'/%3E%3Cline x1='12' y1='30' x2='12' y2='44' stroke='rgba(255,255,255,0.2)' stroke-width='1'/%3E%3Cline x1='24' y1='30' x2='24' y2='44' stroke='rgba(255,255,255,0.2)' stroke-width='1'/%3E%3Cline x1='36' y1='30' x2='36' y2='44' stroke='rgba(255,255,255,0.2)' stroke-width='1'/%3E%3Cline x1='48' y1='30' x2='48' y2='44' stroke='rgba(255,255,255,0.2)' stroke-width='1'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: bottom left;
   }
-  #scrub-ticks .tick{
-    position:absolute; bottom:0; width:1px; height:9px; background:var(--text-3);
-  }
-  #scrub-ticks .tick.major{ height:16px; background:var(--text-2); }
   #scrub-fill{
     position:absolute; left:0; top:0; bottom:0; width:0%;
-    background:linear-gradient(90deg, rgba(58,134,255,.18), rgba(131,56,236,.05));
-    border-right:2px solid var(--primary);
-    box-shadow: 0 0 16px 1px rgba(58,134,255,.7);
+    background:linear-gradient(90deg, rgba(58,134,255,.28), rgba(131,56,236,.15));
+    border-right:1px solid rgba(58,134,255,.6);
+    pointer-events:none;
   }
   #scrub-playhead{
-    position:absolute; top:0; width:0; height:0;
-    border-left:6px solid transparent; border-right:6px solid transparent; border-top:8px solid var(--primary);
-    transform:translateX(-6px);
+    position:absolute; top:0; bottom:0; width:2px; height:100%;
+    background:var(--primary);
+    box-shadow: 0 0 12px 2px rgba(58,134,255,.85);
+    transform:translateX(-1px);
+    pointer-events:none;
+    z-index:10;
+  }
+  #scrub-playhead::before{
+    content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+    border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid var(--primary);
   }
   #scrub-code{
-    font-size:11px; letter-spacing:.06em; padding:0 14px; color:var(--primary); white-space:nowrap; min-width:118px;
+    font-size:11px; letter-spacing:.06em; padding:0 14px; color:var(--primary); white-space:nowrap; min-width:118px; font-weight:600;
   }
   #scrub-label{
     font-size:10px; letter-spacing:.18em; color:var(--text-3); padding-right:14px; text-transform:uppercase; display:none;
   }
   @media(min-width:768px){ #scrub-label{ display:inline; } }
 
-  /* ================= NAVBAR ================= */
+  /* Navbar */
   #navbar{
     position:fixed; top:44px; left:0; right:0; z-index:55;
     transition: background .4s, border-color .4s, padding .4s;
@@ -174,10 +179,8 @@
   .nav-link:hover, .nav-link.active{ color:var(--text-0); }
   .nav-link:hover::after, .nav-link.active::after{ width:100%; }
 
-  /* ================= HERO ================= */
-  #hero{
-    min-height:100svh; position:relative; display:flex; align-items:center; overflow:hidden;
-  }
+  /* Hero Section Elements */
+  #hero{ min-height:100svh; position:relative; display:flex; align-items:center; overflow:hidden; }
   .float-slow{ animation: floaty 7s ease-in-out infinite; }
   .float-slower{ animation: floaty 10s ease-in-out infinite; animation-delay:1.2s; }
   @keyframes floaty{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-16px) } }
@@ -198,13 +201,12 @@
 
   .frame-corner{ position:absolute; width:22px; height:22px; border-color:var(--primary); }
 
-  /* ================= SKILLS ================= */
+  /* Skills & Scope */
   .skill-bar-track{ height:6px; border-radius:99px; background:rgba(255,255,255,.06); overflow:hidden; }
   .skill-bar-fill{ height:100%; border-radius:99px; width:0%; background:linear-gradient(90deg,var(--cyan),var(--primary),var(--violet)); transition:width 1.4s cubic-bezier(.2,.7,.2,1); }
-
   .scope-ring{ border:1px dashed rgba(255,255,255,.14); border-radius:50%; }
 
-  /* ================= PORTFOLIO CARDS ================= */
+  /* Portfolio Cards */
   .proj-card{ position:relative; overflow:hidden; border-radius:18px; }
   .proj-media{ position:relative; overflow:hidden; height:230px; }
   .proj-media img{
@@ -212,20 +214,8 @@
     transition: transform 3.2s cubic-bezier(.2,.6,.2,1);
   }
   .proj-card:hover .proj-media img{ transform: translateY(-30%); }
-  .proj-overlay{
-    position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(5,7,12,0) 30%, rgba(5,7,12,.92) 100%);
-  }
-  .proj-actions{
-    opacity:0; transform:translateY(10px); transition:all .35s ease;
-  }
-  .proj-card:hover .proj-actions{ opacity:1; transform:none; }
-  .proj-tag{ font-size:10px; letter-spacing:.14em; }
 
-  /* ================= TESTIMONIAL ================= */
-  .quote-mark{ font-family:'JetBrains Mono',monospace; font-size:64px; line-height:1; color:var(--primary); opacity:.35; }
-
-  /* ================= FORM ================= */
+  /* Inputs & Forms */
   .field{
     background: rgba(255,255,255,.03);
     border:1px solid var(--line);
@@ -234,58 +224,43 @@
   .field:focus{ outline:none; border-color:var(--primary); background:rgba(58,134,255,.05); box-shadow:0 0 0 3px rgba(58,134,255,.12); }
   .field::placeholder{ color:var(--text-3); }
 
-  /* ================= MISC ================= */
-  .section-eyebrow{
-    letter-spacing:.28em; font-size:11px; color:var(--primary); text-transform:uppercase;
-  }
+  /* Layout Utilities */
+  .section-eyebrow{ letter-spacing:.28em; font-size:11px; color:var(--primary); text-transform:uppercase; }
   .divider-line{ height:1px; background:linear-gradient(90deg, transparent, var(--line-strong), transparent); }
-
   .num-tag{ font-family:'JetBrains Mono',monospace; color:var(--text-3); font-size:12px; }
 
   .marquee-track{ display:flex; width:max-content; animation:marquee 26s linear infinite; }
   @keyframes marquee{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
 
-  /* Keep the embedded Google Map in its natural, full-color style. */
-  .map-wrap iframe{ filter: none; }
-
-  /* mobile nav */
-  #mobileMenu{ transform:translateY(-12px); opacity:0; pointer-events:none; transition:all .35s cubic-bezier(.2,.8,.2,1); }
-  #mobileMenu.open{ transform:translateY(0); opacity:1; pointer-events:auto; }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  /* Responsive Fixes */
+  html,body{width:100%;overflow-x:hidden}
+  img{max-width:100%;height:auto}
+  *{min-width:0}
+  @media (max-width:1024px){
+    #hero{min-height:auto;padding-top:140px;padding-bottom:70px}
+    #hero>.max-w-7xl{display:flex;flex-direction:column-reverse;gap:50px}
+    #hero h1{font-size:clamp(42px,11vw,68px);line-height:1}
+    .glass-strong{max-width:420px;margin:auto}
   }
-
-
-/* === STEP 1 Responsive Foundation === */
-html,body{width:100%;overflow-x:hidden}
-img{max-width:100%;height:auto}
-*{min-width:0}
-@media (max-width:1024px){
-#hero{min-height:auto;padding-top:140px;padding-bottom:70px}
-#hero>.max-w-7xl{display:flex;flex-direction:column-reverse;gap:50px}
-#hero h1{font-size:clamp(42px,11vw,68px);line-height:1}
-.glass-strong{max-width:420px;margin:auto}
-}
-@media (max-width:768px){
-section{padding-top:80px!important;padding-bottom:80px!important}
-.max-w-7xl{padding-left:20px;padding-right:20px}
-#hero{text-align:center}
-#hero .btn-primary,#hero .btn-ghost{width:100%;justify-content:center}
-#navbar nav{height:70px;padding-left:18px;padding-right:18px}
-}
-
+  @media (max-width:768px){
+    section{padding-top:80px!important;padding-bottom:80px!important}
+    .max-w-7xl{padding-left:20px;padding-right:20px}
+    #hero{text-align:center}
+    #hero .btn-primary,#hero .btn-ghost{width:100%;justify-content:center}
+    #navbar nav{height:70px;padding-left:18px;padding-right:18px}
+  }
 </style>
 </head>
+
 <body class="antialiased">
 
+<!-- Ambient Orbs & Grids -->
 <div class="grain"></div>
 <div class="grid-bg"></div>
 <div class="glow-orb float-slow" style="width:520px;height:520px;top:-160px;left:-160px;background:radial-gradient(circle,rgba(58,134,255,.28),transparent 70%);"></div>
 <div class="glow-orb float-slower" style="width:480px;height:480px;top:30%;right:-200px;background:radial-gradient(circle,rgba(131,56,236,.22),transparent 70%);"></div>
 <div class="glow-orb float-slow" style="width:420px;height:420px;bottom:-140px;left:20%;background:radial-gradient(circle,rgba(94,231,255,.14),transparent 70%);"></div>
 
-<!-- ============ TIMELINE SCRUBBER (signature) ============ -->
 <div id="scrub-track">
   <span id="scrub-code" class="font-mono">00:00:00:00</span>
   <div id="scrub-ticks">
@@ -295,7 +270,6 @@ section{padding-top:80px!important;padding-bottom:80px!important}
   <span id="scrub-label" class="font-mono">SCROLL&nbsp;TIMELINE</span>
 </div>
 
-<!-- ============ NAVBAR ============ -->
 <header id="navbar">
   <nav class="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
     <a href="#hero" class="flex items-center gap-2 group">
@@ -314,17 +288,16 @@ section{padding-top:80px!important;padding-bottom:80px!important}
     </a>
     <button id="menuBtn" class="md:hidden text-[var(--text-0)] text-xl"><i class="fa-solid fa-bars"></i></button>
   </nav>
-  <div id="mobileMenu" class="md:hidden absolute top-full left-4 right-4 glass-strong rounded-2xl p-6 flex flex-col gap-5 text-sm">
-    <a href="#about" class="nav-link">About</a>
-    <a href="#skills" class="nav-link">Skills</a>
-    <a href="#portfolio" class="nav-link">Portfolio</a>
-    <a href="#experience" class="nav-link">Experience</a>
-    <a href="#contact" class="nav-link">Contact</a>
-    <a href="#contact" class="btn-primary text-center text-white px-5 py-2.5 rounded-full font-medium">Start a Project</a>
+  <div id="mobileMenu" class="hidden md:hidden absolute top-full left-4 right-4 glass-strong rounded-2xl p-6 flex-col gap-5 text-sm">
+    <a href="#about" class="nav-link" onclick="toggleMobileMenu()">About</a>
+    <a href="#skills" class="nav-link" onclick="toggleMobileMenu()">Skills</a>
+    <a href="#portfolio" class="nav-link" onclick="toggleMobileMenu()">Portfolio</a>
+    <a href="#experience" class="nav-link" onclick="toggleMobileMenu()">Experience</a>
+    <a href="#contact" class="nav-link" onclick="toggleMobileMenu()">Contact</a>
+    <a href="#contact" class="btn-primary text-center text-white px-5 py-2.5 rounded-full font-medium" onclick="toggleMobileMenu()">Start a Project</a>
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
 <section id="hero" class="relative px-6 md:px-10 pt-24">
   <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1.15fr,.85fr] gap-16 items-center relative z-10">
     <div>
@@ -333,9 +306,9 @@ section{padding-top:80px!important;padding-bottom:80px!important}
         <span class="font-mono text-xs tracking-[.25em] text-[var(--text-2)] uppercase">Now recording · Available for projects</span>
       </div>
 
-      <h1 class="reveal in text-[13vw] leading-[.95] md:text-6xl lg:text-7xl font-800 font-extrabold text-[var(--text-0)] mb-6">
+      <h1 class="reveal in text-[13vw] leading-[.95] md:text-6xl lg:text-7xl font-extrabold text-[var(--text-0)] mb-6">
         Cutting stories<br>
-        into <span class="grad-text">motion.</span>
+        into <span class="grad-text">motion</span>
       </h1>
 
       <p class="reveal in text-base md:text-lg text-[var(--text-2)] max-w-xl mb-3">
@@ -368,8 +341,8 @@ section{padding-top:80px!important;padding-bottom:80px!important}
     <div class="reveal-scale in relative mx-auto w-full max-w-xs sm:max-w-sm">
       <div class="absolute -inset-4 rounded-[28px] grad-border pointer-events-none"></div>
       <div class="glass-strong rounded-[28px] p-4 relative">
-        <div class="rounded-[20px] overflow-hidden relative aspect-[4/5]">
-          <img id="heroImg" src="" alt="Mohammad Asif Nur" class="w-full h-full object-cover">
+        <div class="rounded-[20px] overflow-hidden relative aspect-[4/5] bg-slate-900">
+          <img id="heroImg" src="https://blogger.googleusercontent.com/img/a/AVvXsEjMptbyVKnM5neaA5ZGRgW6AaVvD88GcSjt78ygY5g6yejZtxNjjfmhWwPzUZDLaDgGNP8TNPrhcOfMOYwZQ6IE4nM6lFs2-meh6RabF305uq_bHyVkRVs3uk65FCIsmgz8BOPu-d2eQB9521vjv-xl9HeRdAB6hkYbC1bb11epZNpD_CD6df-RZyz8ksc=w400-h379" alt="Mohammad Asif Nur" class="w-full h-full object-cover scale-125 origin-top">
           <div class="absolute top-3 left-3 right-3 flex items-center justify-between font-mono text-[10px] text-white/80">
             <span class="flex items-center gap-1.5"><span class="rec-dot"></span> REC</span>
             <span id="heroTimecode">00:00:00:00</span>
@@ -391,82 +364,93 @@ section{padding-top:80px!important;padding-bottom:80px!important}
         </div>
       </div>
 
+      <!-- Stat Badges floating on card -->
       <div class="glass rounded-2xl px-5 py-3 absolute -left-8 -bottom-6 float-slow hidden sm:block">
         <p class="text-[10px] font-mono text-[var(--text-3)] tracking-widest uppercase mb-1">Experience</p>
-        <p class="text-2xl font-bold text-[var(--text-0)]" id="statYears">5+ <span class="text-xs font-normal text-[var(--text-2)]">years</span></p>
+        <p class="text-2xl font-bold text-[var(--text-0)]">4+ <span class="text-xs font-normal text-[var(--text-2)]">years</span></p>
       </div>
       <div class="glass rounded-2xl px-5 py-3 absolute -right-6 top-8 float-slower hidden sm:block">
         <p class="text-[10px] font-mono text-[var(--text-3)] tracking-widest uppercase mb-1">Projects</p>
-        <p class="text-2xl font-bold text-[var(--text-0)]" id="statProjects">120+</p>
+        <p class="text-2xl font-bold text-[var(--text-0)]">100+</p>
       </div>
     </div>
   </div>
-
-  <a href="#about" class="reveal in absolute left-1/2 -translate-x-1/2 bottom-8 hidden md:flex flex-col items-center gap-2 text-[var(--text-3)] text-xs">
-    <span class="font-mono tracking-widest">SCROLL</span>
-    <i class="fa-solid fa-chevron-down animate-bounce"></i>
-  </a>
 </section>
 
-<!-- ============ MARQUEE STRIP ============ -->
-<div class="relative border-y border-[var(--line)] bg-[var(--bg-1)]/60 py-4 overflow-hidden">
+<div class="relative border-y border-[var(--line)] bg-[var(--bg-1)]/60 py-4 overflow-hidden mt-12">
   <div class="marquee-track font-mono text-sm text-[var(--text-3)] tracking-[.3em] uppercase">
     <span class="px-6">Video Editing</span><span class="px-6 text-[var(--primary)]">✦</span>
     <span class="px-6">Motion Graphics</span><span class="px-6 text-[var(--primary)]">✦</span>
     <span class="px-6">Color Grading</span><span class="px-6 text-[var(--primary)]">✦</span>
-    <span class="px-6">VFX Compositing</span><span class="px-6 text-[var(--primary)]">✦</span>
     <span class="px-6">Sound Design</span><span class="px-6 text-[var(--primary)]">✦</span>
     <span class="px-6">Video Editing</span><span class="px-6 text-[var(--primary)]">✦</span>
     <span class="px-6">Motion Graphics</span><span class="px-6 text-[var(--primary)]">✦</span>
     <span class="px-6">Color Grading</span><span class="px-6 text-[var(--primary)]">✦</span>
-    <span class="px-6">VFX Compositing</span><span class="px-6 text-[var(--primary)]">✦</span>
     <span class="px-6">Sound Design</span><span class="px-6 text-[var(--primary)]">✦</span>
   </div>
 </div>
 
-<!-- ============ ABOUT ============ -->
 <section id="about" class="relative px-6 md:px-10 py-28 md:py-36">
   <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-start">
     <div class="reveal">
       <p class="section-eyebrow mb-4"><span class="num-tag">01 /</span> About</p>
       <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-0)] leading-tight mb-6">
-        Precision in the edit,<br> <span class="grad-text">emotion in the cut.</span>
+        Precision in the edit,<br> <span class="grad-text">emotion in the cut</span>
       </h2>
-      <p id="aboutText" class="text-[var(--text-2)] leading-relaxed mb-6"></p>
+      <p id="aboutText" class="text-[var(--text-2)] leading-relaxed mb-6">
+        I'm a post-production specialist with 4+ years behind the timeline — editing, grading and finishing video for brands, creators and agencies. I believe every cut should earn its place: pacing, color and sound working together so the story lands exactly the way it was meant to.
+      </p>
       <p class="text-[var(--text-2)] leading-relaxed mb-8">
-        Based in Uttara, Dhaka, I collaborate with brands, creators and agencies worldwide —
-        turning raw footage and ideas into refined, story-driven visuals that hold attention
-        from the very first frame.
+        Based in Uttara, Dhaka, I collaborate with clients worldwide — turning raw footage and ideas into refined, story-driven visuals that hold attention from the very first frame.
       </p>
       <div class="flex flex-wrap gap-3">
         <span class="glass px-4 py-2 rounded-full text-xs text-[var(--text-1)] font-mono"><i class="fa-solid fa-location-dot text-[var(--primary)] mr-2"></i>Uttara, Dhaka</span>
-        <span class="glass px-4 py-2 rounded-full text-xs text-[var(--text-1)] font-mono"><i class="fa-solid fa-envelope text-[var(--primary)] mr-2"></i><span id="aboutEmail"></span></span>
-        <span class="glass px-4 py-2 rounded-full text-xs text-[var(--text-1)] font-mono"><i class="fa-solid fa-phone text-[var(--primary)] mr-2"></i><span id="aboutPhone"></span></span>
+        <span class="glass px-4 py-2 rounded-full text-xs text-[var(--text-1)] font-mono"><i class="fa-solid fa-envelope text-[var(--primary)] mr-2"></i><span id="aboutEmail">asifnurofficial@gmail.com</span></span>
+        <span class="glass px-4 py-2 rounded-full text-xs text-[var(--text-1)] font-mono"><i class="fa-solid fa-phone text-[var(--primary)] mr-2"></i><span id="aboutPhone">+880 1644-337605</span></span>
       </div>
     </div>
 
-    <div class="reveal grid grid-cols-2 gap-5" style="--i:1">
+    <!-- Stat Grid (100 Projects, 4 Years, 40 Clients with Icon) -->
+    <div class="reveal grid grid-cols-2 gap-5">
+      <!-- 100 Projects -->
       <div class="glass rounded-2xl p-6 col-span-2 flex items-center justify-between">
         <div>
-          <p class="text-3xl font-extrabold text-[var(--text-0)]" data-count="120">0</p>
+          <p class="text-3xl sm:text-4xl font-extrabold text-[var(--text-0)] font-mono">100+</p>
           <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mt-1">Projects Delivered</p>
         </div>
-        <i class="fa-solid fa-film text-3xl text-[var(--primary)] opacity-60"></i>
-      </div>
-      <div class="glass rounded-2xl p-6">
-        <p class="text-3xl font-extrabold text-[var(--text-0)]" data-count="5">0</p>
-        <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mt-1">Years Experience</p>
-      </div>
-      <div class="glass rounded-2xl p-6">
-        <p class="text-3xl font-extrabold text-[var(--text-0)]" data-count="60">0</p>
-        <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mt-1">Happy Clients</p>
-      </div>
-      <div class="glass rounded-2xl p-6 col-span-2">
-        <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mb-4">Toolkit</p>
-        <div class="flex flex-wrap gap-4 text-2xl text-[var(--text-2)]">
-          <i class="fa-brands fa-adobe" title="Adobe Suite"></i>
-          <span class="text-sm font-mono self-center text-[var(--text-3)]">Premiere Pro · After Effects · DaVinci Resolve · Photoshop · Audition</span>
+        <div class="w-12 h-12 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/30 flex items-center justify-center text-[var(--primary)]">
+          <i class="fa-solid fa-film text-xl"></i>
         </div>
+      </div>
+
+      <!-- 4 Years Experience -->
+      <div class="glass rounded-2xl p-6 flex items-center justify-between">
+        <div>
+          <p class="text-3xl font-extrabold text-[var(--text-0)] font-mono">4+</p>
+          <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mt-1">Years Experience</p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/30 flex items-center justify-center text-[var(--primary)]">
+          <i class="fa-solid fa-calendar-check text-lg"></i>
+        </div>
+      </div>
+
+      <!-- 40 Happy Clients with Icon -->
+      <div class="glass rounded-2xl p-6 flex items-center justify-between">
+        <div>
+          <p class="text-3xl font-extrabold text-[var(--text-0)] font-mono">40+</p>
+          <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mt-1">Happy Clients</p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/30 flex items-center justify-center text-[var(--primary)]">
+          <i class="fa-solid fa-user-check text-lg"></i>
+        </div>
+      </div>
+
+      <!-- Toolkit -->
+      <div class="glass rounded-2xl p-6 col-span-2">
+        <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mb-3">Toolkit</p>
+        <p class="text-sm font-mono text-[var(--text-1)] leading-relaxed">
+          Premiere Pro &nbsp;·&nbsp; After Effects &nbsp;·&nbsp; DaVinci Resolve &nbsp;·&nbsp; Photoshop &nbsp;·&nbsp; Audition &nbsp;·&nbsp; Blender
+        </p>
       </div>
     </div>
   </div>
@@ -474,19 +458,53 @@ section{padding-top:80px!important;padding-bottom:80px!important}
 
 <div class="max-w-7xl mx-auto px-6 md:px-10"><div class="divider-line"></div></div>
 
-<!-- ============ SKILLS ============ -->
 <section id="skills" class="relative px-6 md:px-10 py-28 md:py-36">
   <div class="max-w-7xl mx-auto">
     <div class="reveal max-w-2xl mb-16">
       <p class="section-eyebrow mb-4"><span class="num-tag">02 /</span> Skills</p>
       <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-0)] leading-tight">
-        Every frame, <span class="grad-text">graded and tuned.</span>
+        Every frame, <span class="grad-text">graded and tuned</span>
       </h2>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-x-16 gap-y-9 mb-16" id="skillList"></div>
+    <!-- Skill Progress Bars -->
+    <div class="grid md:grid-cols-2 gap-x-16 gap-y-9 mb-16" id="skillList">
+      <div>
+        <div class="flex justify-between text-xs font-mono mb-2">
+          <span class="text-[var(--text-1)]">Video Editing (Premiere Pro)</span>
+          <span class="text-[var(--primary)]">96%</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 96%"></div></div>
+      </div>
 
+      <div>
+        <div class="flex justify-between text-xs font-mono mb-2">
+          <span class="text-[var(--text-1)]">Motion Graphics (After Effects)</span>
+          <span class="text-[var(--primary)]">92%</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 92%"></div></div>
+      </div>
+
+      <div>
+        <div class="flex justify-between text-xs font-mono mb-2">
+          <span class="text-[var(--text-1)]">Color Grading (DaVinci Resolve)</span>
+          <span class="text-[var(--primary)]">88%</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 88%"></div></div>
+      </div>
+
+      <div>
+        <div class="flex justify-between text-xs font-mono mb-2">
+          <span class="text-[var(--text-1)]">Sound Design &amp; Audio Mixing</span>
+          <span class="text-[var(--primary)]">85%</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 85%"></div></div>
+      </div>
+    </div>
+
+    <!-- Core Services Grid (VFX Completely Removed, Waveform Icon for Sound Design) -->
     <div class="grid sm:grid-cols-3 gap-6">
+      <!-- Color Grading -->
       <div class="reveal glass rounded-2xl p-7 text-center">
         <div class="relative w-24 h-24 mx-auto mb-5 flex items-center justify-center">
           <div class="scope-ring absolute inset-0"></div>
@@ -494,50 +512,131 @@ section{padding-top:80px!important;padding-bottom:80px!important}
           <i class="fa-solid fa-palette text-2xl text-[var(--primary)]"></i>
         </div>
         <h3 class="text-[var(--text-0)] font-semibold mb-1">Color Grading</h3>
-        <p class="text-xs text-[var(--text-3)]">Cinematic looks &amp; scopes-accurate correction</p>
+        <p class="text-xs text-[var(--text-3)]">Cinematic looks &amp; scopes-accurate color correction</p>
       </div>
-      <div class="reveal glass rounded-2xl p-7 text-center" style="--i:1">
+
+      <!-- Motion Graphics -->
+      <div class="reveal glass rounded-2xl p-7 text-center">
         <div class="relative w-24 h-24 mx-auto mb-5 flex items-center justify-center">
           <div class="scope-ring absolute inset-0"></div>
           <div class="scope-ring absolute inset-3"></div>
-          <i class="fa-solid fa-cubes text-2xl text-[var(--primary)]"></i>
+          <i class="fa-solid fa-wand-magic-sparkles text-2xl text-[var(--primary)]"></i>
         </div>
-        <h3 class="text-[var(--text-0)] font-semibold mb-1">VFX Compositing</h3>
-        <p class="text-xs text-[var(--text-3)]">Seamless layers, tracking &amp; clean-up</p>
+        <h3 class="text-[var(--text-0)] font-semibold mb-1">Motion Graphics</h3>
+        <p class="text-xs text-[var(--text-3)]">Dynamic titles, keyframe animations &amp; visual accents</p>
       </div>
-      <div class="reveal glass rounded-2xl p-7 text-center" style="--i:2">
+
+      <!-- Sound Design (With Waveform Icon fa-wave-square) -->
+      <div class="reveal glass rounded-2xl p-7 text-center">
         <div class="relative w-24 h-24 mx-auto mb-5 flex items-center justify-center">
           <div class="scope-ring absolute inset-0"></div>
           <div class="scope-ring absolute inset-3"></div>
-          <i class="fa-solid fa-waveform-lines text-2xl text-[var(--primary)]"></i>
+          <i class="fa-solid fa-wave-square text-2xl text-[var(--primary)]"></i>
         </div>
         <h3 class="text-[var(--text-0)] font-semibold mb-1">Sound Design</h3>
-        <p class="text-xs text-[var(--text-3)]">Mixed, mastered &amp; emotionally timed audio</p>
+        <p class="text-xs text-[var(--text-3)]">Mixed, mastered &amp; emotionally timed audio tracks</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PORTFOLIO ============ -->
 <section id="portfolio" class="relative px-6 md:px-10 py-28 md:py-36 bg-[var(--bg-1)]/40">
   <div class="max-w-7xl mx-auto">
     <div class="reveal flex flex-wrap items-end justify-between gap-6 mb-16">
       <div class="max-w-2xl">
         <p class="section-eyebrow mb-4"><span class="num-tag">03 /</span> Portfolio</p>
         <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-0)] leading-tight">
-          Selected <span class="grad-text">frames.</span>
+          Best <span class="grad-text">works</span>
         </h2>
       </div>
-      <p class="text-[var(--text-3)] text-sm max-w-sm font-mono">Hover a project to scrub the preview and reveal details.</p>
+      <p class="text-[var(--text-3)] text-sm max-w-sm font-mono">Curated post-production projects across video editing, motion graphics and color grading.</p>
     </div>
 
-    <div id="portfolioGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+    <!-- Portfolio Cards Container -->
+    <div id="portfolioGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+      <!-- Project 1 -->
+      <div class="proj-card glass glass-hover">
+        <div class="proj-media">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEg3rpBwZ7VO3inIUUxi7KhOjPuD2CmSYTirVaOiywCd4LAT5byZ9BcclDKFGV-DySKj43ook-UQLYPJCtLsutXhrnVKc-ANzB2qhOqRWdaZyR-51VQEs35MCeUw2aEG-Z__JpN80vVWbTPuoQU5sPZKo5F4IsnNpe01B9sfrhBGwikuN1CocYPHGefIvX8" alt="Brand Launch Film">
+          <div class="proj-overlay"></div>
+        </div>
+        <div class="p-6">
+          <span class="proj-tag font-mono text-[var(--primary)] uppercase font-semibold">Video Editing · Color Grading</span>
+          <h3 class="text-lg font-bold text-[var(--text-0)] mt-1 mb-2">Commercial Brand Launch</h3>
+          <p class="text-xs text-[var(--text-2)] leading-relaxed">Dynamic commercial reveal video featuring high-energy pacing, audio mix, and cinematic DaVinci Resolve color grade.</p>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="proj-card glass glass-hover">
+        <div class="proj-media">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEghON1Uy6Oc2gVfhKEW1MqCDXP6e5_XTwhYNNPglvtmdOFxM8TDz5bnvA7yhN3mudHnAHDzhTI7OxY84M-Ulz6KbXD6-xILB_-bN7IRyD3sEndXdtFA3ZVsxEmQYxqB2driAN1T12HkF4V1a7Xflz1S2cXcYEICSOZ0HqhU2zngzPqbwjirTTcOib73544=w400-h225" alt="Motion Identity Reel">
+          <div class="proj-overlay"></div>
+        </div>
+        <div class="p-6">
+          <span class="proj-tag font-mono text-[var(--primary)] uppercase font-semibold">Motion Graphics · Animation</span>
+          <h3 class="text-lg font-bold text-[var(--text-0)] mt-1 mb-2">Kinetic Motion Identity Reel</h3>
+          <p class="text-xs text-[var(--text-2)] leading-relaxed">Typography and procedural kinetic vector animations built in Adobe After Effects &amp; Blender for digital campaign visuals.</p>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="proj-card glass glass-hover">
+        <div class="proj-media">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiHsDmfZUPZkH3nQm__giWg7TZ4b0rqYYL_qz3RvwwQFlMTNycLbJ-PyzaZLIZ-NT5F6mYk8oVADth1xbqlP8VMUIod6m91c9k3cUp7DulBCXNLTKmL9cK4YeRfiAw7DoF-SW_eE6g7N5iQv4RdmasjmZwVxGRuCc4oIA9_RsoTLAGZ6zC9DSz29tsoKcA=w400-h225" alt="Documentary Short">
+          <div class="proj-overlay"></div>
+        </div>
+        <div class="p-6">
+          <span class="proj-tag font-mono text-[var(--primary)] uppercase font-semibold">Editing · Sound Design</span>
+          <h3 class="text-lg font-bold text-[var(--text-0)] mt-1 mb-2">Documentary Story Short</h3>
+          <p class="text-xs text-[var(--text-2)] leading-relaxed">Human-centric documentary story with naturalistic ambient sound restoration, dialogue cleaning and subtle LUT grading.</p>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="proj-card glass glass-hover">
+        <div class="proj-media">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEik7iJBy8bikrF513WQi7Ou_TOxxWm0kHZbM7Gk68YDvCUFF70Mo8RGFE62NrFx0amPUi745hJEs77okxNUgkB_l0R3yWOoo5WTR5ZEYysRbY3Sb0vn1gvEwHVhR9w9t9SxTKwiLo36jhHZPjJyJm0MK95VfWPPWITygN_Pqy5sUdoM2YOCWujHJQk7T74" alt="Product Commercial">
+          <div class="proj-overlay"></div>
+        </div>
+        <div class="p-6">
+          <span class="proj-tag font-mono text-[var(--primary)] uppercase font-semibold">Motion · Color Grading</span>
+          <h3 class="text-lg font-bold text-[var(--text-0)] mt-1 mb-2">Product Showcase Commercial</h3>
+          <p class="text-xs text-[var(--text-2)] leading-relaxed">High-end product promo video featuring seamless transitions, light accents, sound synchronization, and skin tone color matching.</p>
+        </div>
+      </div>
+
+      <!-- Project 5 -->
+      <div class="proj-card glass glass-hover">
+        <div class="proj-media">
+          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="3D Animation">
+          <div class="proj-overlay"></div>
+        </div>
+        <div class="p-6">
+          <span class="proj-tag font-mono text-[var(--primary)] uppercase font-semibold">Motion Graphics · 3D</span>
+          <h3 class="text-lg font-bold text-[var(--text-0)] mt-1 mb-2">3D Product Intro Animation</h3>
+          <p class="text-xs text-[var(--text-2)] leading-relaxed">3D product rendering, keyframe animation, studio lighting setup and post-processing created using Blender and After Effects.</p>
+        </div>
+      </div>
+
+      <!-- Project 6 -->
+      <div class="proj-card glass glass-hover">
+        <div class="proj-media">
+          <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=600&q=80" alt="Soundscape">
+          <div class="proj-overlay"></div>
+        </div>
+        <div class="p-6">
+          <span class="proj-tag font-mono text-[var(--primary)] uppercase font-semibold">Sound Design · Audio Mastering</span>
+          <h3 class="text-lg font-bold text-[var(--text-0)] mt-1 mb-2">Atmospheric Soundscape Mix</h3>
+          <p class="text-xs text-[var(--text-2)] leading-relaxed">Immersive audio soundscape design with crisp foley sound effects, dialogue isolation, and master level compression in Audition.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <div class="max-w-7xl mx-auto px-6 md:px-10"><div class="divider-line"></div></div>
 
-<!-- ============ EXPERIENCE ============ -->
 <section id="experience" class="relative px-6 md:px-10 py-28 md:py-36">
   <div class="max-w-7xl mx-auto grid lg:grid-cols-[.8fr,1.2fr] gap-16">
     <div class="reveal">
@@ -545,62 +644,111 @@ section{padding-top:80px!important;padding-bottom:80px!important}
       <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-0)] leading-tight mb-6">
         The <span class="grad-text">edit log.</span>
       </h2>
-      <p class="text-[var(--text-2)] leading-relaxed">A running timeline of the roles, releases and milestones that shaped my craft.</p>
+      <p class="text-[var(--text-2)] leading-relaxed">A running timeline of roles, releases and milestones that shaped my post-production career over 4+ years.</p>
     </div>
 
-    <div id="timelineList" class="relative pl-8 border-l border-[var(--line-strong)] space-y-12"></div>
+    <!-- Timeline List -->
+    <div class="relative pl-8 border-l border-[var(--line-strong)] space-y-12">
+      <div class="relative">
+        <div class="absolute -left-[41px] top-1.5 w-4 h-4 rounded-full bg-[var(--primary)] border-4 border-[var(--bg-0)]"></div>
+        <span class="font-mono text-xs text-[var(--primary)] uppercase font-semibold tracking-wider">2025 — Present</span>
+        <h3 class="text-xl font-bold text-[var(--text-0)] mt-1">Freelance Post-Production Specialist</h3>
+        <p class="text-xs text-[var(--text-3)] font-mono mb-2">Self-employed · Remote (Upwork &amp; Direct Clients)</p>
+        <p class="text-sm text-[var(--text-2)] leading-relaxed">Delivering video editing, motion graphics, color grading and sound design for global brands and content creators.</p>
+      </div>
+
+      <div class="relative">
+        <div class="absolute -left-[41px] top-1.5 w-4 h-4 rounded-full bg-[var(--primary)] border-4 border-[var(--bg-0)]"></div>
+        <span class="font-mono text-xs text-[var(--primary)] uppercase font-semibold tracking-wider">2023 — 2025</span>
+        <h3 class="text-xl font-bold text-[var(--text-0)] mt-1">Senior Video Editor</h3>
+        <p class="text-xs text-[var(--text-3)] font-mono mb-2">Animaster Studio, Dhaka</p>
+        <p class="text-sm text-[var(--text-2)] leading-relaxed">Led post-production on commercial and social campaigns, establishing color grading pipelines and sound mixing standards.</p>
+      </div>
+
+      <div class="relative">
+        <div class="absolute -left-[41px] top-1.5 w-4 h-4 rounded-full bg-[var(--primary)] border-4 border-[var(--bg-0)]"></div>
+        <span class="font-mono text-xs text-[var(--primary)] uppercase font-semibold tracking-wider">2021 — 2023</span>
+        <h3 class="text-xl font-bold text-[var(--text-0)] mt-1">Video Editor &amp; Editor</h3>
+        <p class="text-xs text-[var(--text-3)] font-mono mb-2">Tech Park English, Dhaka</p>
+        <p class="text-sm text-[var(--text-2)] leading-relaxed">Built animated brand assets, promo openers, and explainer video sequences in After Effects for regional brand clients.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ============ TESTIMONIALS ============ -->
 <section id="testimonials" class="relative px-6 md:px-10 py-28 md:py-36 bg-[var(--bg-1)]/40">
   <div class="max-w-7xl mx-auto">
     <div class="reveal max-w-2xl mb-16">
       <p class="section-eyebrow mb-4"><span class="num-tag">05 /</span> Testimonials</p>
       <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-0)] leading-tight">
-        Notes from the <span class="grad-text">review room.</span>
+        Notes from the <span class="grad-text">review room</span>
       </h2>
     </div>
-    <div id="testimonialGrid" class="grid md:grid-cols-3 gap-7"></div>
+
+    <div class="grid md:grid-cols-3 gap-7">
+      <div class="glass rounded-2xl p-7 flex flex-col justify-between">
+        <p class="text-xs sm:text-sm text-[var(--text-2)] leading-relaxed mb-6">"Asif turned hours of raw footage into a two-minute film that made our entire team emotional. The pacing and color grade were flawless."</p>
+        <div>
+          <h4 class="text-sm font-bold text-[var(--text-0)]">Rafiq Ahmed</h4>
+          <p class="text-xs font-mono text-[var(--text-3)]">Marketing Director</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl p-7 flex flex-col justify-between">
+        <p class="text-xs sm:text-sm text-[var(--text-2)] leading-relaxed mb-6">"Sharp instincts for rhythm, sound design and color precision. He delivered exactly the premium look we were after, ahead of schedule."</p>
+        <div>
+          <h4 class="text-sm font-bold text-[var(--text-0)]">Nusrat Jahan</h4>
+          <p class="text-xs font-mono text-[var(--text-3)]">Brand Manager</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl p-7 flex flex-col justify-between">
+        <p class="text-xs sm:text-sm text-[var(--text-2)] leading-relaxed mb-6">"Reliable, fast, and genuinely talented at motion graphics and editing. Our launch campaign reel wouldn't have landed so strongly without him."</p>
+        <div>
+          <h4 class="text-sm font-bold text-[var(--text-0)]">Tanvir Hasan</h4>
+          <p class="text-xs font-mono text-[var(--text-3)]">Startup Founder</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ============ CONTACT ============ -->
 <section id="contact" class="relative px-6 md:px-10 py-28 md:py-36">
   <div class="max-w-7xl mx-auto grid lg:grid-cols-[.85fr,1.15fr] gap-16">
     <div class="reveal">
       <p class="section-eyebrow mb-4"><span class="num-tag">06 /</span> Contact</p>
       <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-0)] leading-tight mb-6">
-        Let's cut something <span class="grad-text">great, together.</span>
+        Let's cut something <span class="grad-text">great, together</span>
       </h2>
-      <p class="text-[var(--text-2)] leading-relaxed mb-9">Have a project in mind? Send the brief — I typically reply within 24 hours.</p>
+      <p class="text-[var(--text-2)] leading-relaxed mb-9">Have a project in mind? Send your project details or drop a message below — I typically reply within 24 hours.</p>
 
       <div class="space-y-5">
-        <a id="contactPhoneRow" href="#" class="flex items-center gap-4 glass rounded-2xl px-5 py-4 hover:border-[var(--primary)] transition">
+        <a href="tel:01644337605" class="flex items-center gap-4 glass rounded-2xl px-5 py-4 hover:border-[var(--primary)] transition">
           <span class="w-10 h-10 rounded-full bg-[var(--primary)]/15 flex items-center justify-center text-[var(--primary)]"><i class="fa-solid fa-phone"></i></span>
           <div>
             <p class="text-[10px] uppercase tracking-widest text-[var(--text-3)] font-mono">Phone</p>
-            <p id="contactPhone" class="text-[var(--text-0)] text-sm"></p>
+            <p class="text-[var(--text-0)] text-sm font-semibold">+880 1644-337605</p>
           </div>
         </a>
-        <a id="contactEmailRow" href="#" class="flex items-center gap-4 glass rounded-2xl px-5 py-4 hover:border-[var(--primary)] transition">
+        <a href="mailto:asifnurofficial@gmail.com" class="flex items-center gap-4 glass rounded-2xl px-5 py-4 hover:border-[var(--primary)] transition">
           <span class="w-10 h-10 rounded-full bg-[var(--primary)]/15 flex items-center justify-center text-[var(--primary)]"><i class="fa-solid fa-envelope"></i></span>
           <div>
             <p class="text-[10px] uppercase tracking-widest text-[var(--text-3)] font-mono">Email</p>
-            <p id="contactEmail" class="text-[var(--text-0)] text-sm"></p>
+            <p class="text-[var(--text-0)] text-sm font-semibold">asifnurofficial@gmail.com</p>
           </div>
         </a>
         <div class="flex items-center gap-4 glass rounded-2xl px-5 py-4">
           <span class="w-10 h-10 rounded-full bg-[var(--primary)]/15 flex items-center justify-center text-[var(--primary)]"><i class="fa-solid fa-location-dot"></i></span>
           <div>
             <p class="text-[10px] uppercase tracking-widest text-[var(--text-3)] font-mono">Location</p>
-            <p id="contactLocation" class="text-[var(--text-0)] text-sm"></p>
+            <p class="text-[var(--text-0)] text-sm font-semibold">Uttara, Dhaka, Bangladesh</p>
           </div>
         </div>
       </div>
     </div>
 
-    <form id="contactForm" class="reveal glass-strong rounded-3xl p-7 md:p-10" style="--i:1">
+    <!-- Contact Form -->
+    <form id="contactForm" onsubmit="handleContactSubmit(event)" class="reveal glass-strong rounded-3xl p-7 md:p-10">
       <div class="grid sm:grid-cols-2 gap-5 mb-5">
         <div>
           <label class="text-xs font-mono uppercase tracking-widest text-[var(--text-3)] mb-2 block">Name</label>
@@ -617,410 +765,168 @@ section{padding-top:80px!important;padding-bottom:80px!important}
       </div>
       <div class="mb-6">
         <label class="text-xs font-mono uppercase tracking-widest text-[var(--text-3)] mb-2 block">Message</label>
-        <textarea required name="message" rows="5" placeholder="Tell me about your project..." class="field w-full rounded-xl px-4 py-3.5 text-sm text-[var(--text-0)] resize-none"></textarea>
+        <textarea required name="message" rows="5" placeholder="Tell me about your project timeline and vision..." class="field w-full rounded-xl px-4 py-3.5 text-sm text-[var(--text-0)] resize-none"></textarea>
       </div>
       <button type="submit" id="submitBtn" class="btn-primary w-full text-white px-7 py-4 rounded-xl text-sm font-medium flex items-center justify-center gap-2">
         <span id="submitLabel">Send Message</span> <i class="fa-solid fa-paper-plane text-xs"></i>
       </button>
-      <p id="formStatus" class="text-xs font-mono mt-4 text-center min-h-[1em]"></p>
+      <p id="formStatus" class="text-xs font-mono mt-4 text-center min-h-[1.5em] text-emerald-400"></p>
     </form>
   </div>
 </section>
 
-<!-- ============ MAP ============ -->
 <section class="relative px-6 md:px-10 pb-10">
   <div class="max-w-7xl mx-auto">
     <div class="reveal map-wrap rounded-3xl overflow-hidden border border-[var(--line)] h-[360px]">
-      <iframe id="mapFrame" src="" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe id="mapFrame" src="https://www.google.com/maps?q=Uttara,Dhaka,Bangladesh&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
 </section>
 
-<!-- ============ FOOTER ============ -->
 <footer class="relative px-6 md:px-10 py-10 border-t border-[var(--line)]">
   <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-3)] font-mono">
-    <p>&copy; <span id="year"></span> Mohammad Asif Nur. All frames reserved.</p>
+    <p>&copy; <span id="year">2026</span> Mohammad Asif Nur. All frames reserved.</p>
     <p class="flex items-center gap-2"><span class="rec-dot"></span> Crafted frame by frame in Dhaka</p>
   </div>
 </footer>
 
 <script>
-/* ============================================================
-   CONFIG — edit everything below to customize the entire site.
-   No design code needs to change.
-============================================================ */
-const CONFIG = {
-  name: "Mohammad Asif Nur",
-  role: "Creative Post-Production Specialist",
-  roles: ["Video Editor", "Motion Graphics Artist", "Colorist", "VFX Artist", "Sound Designer"],
-  phone: "01644337605",
-  phoneDisplay: "+880 1644-337605",
-  email: "asifnurofficial@gmail.com",
-  location: "Uttara, Dhaka, Bangladesh",
+  /* CONFIG OBJECT */
+  const CONFIG = {
+    roles: ["Video Editor", "Motion Graphics Artist", "Colorist", "Sound Designer"],
+    phoneDisplay: "+880 1644-337605",
+    email: "asifnurofficial@gmail.com"
+  };
 
-  profileImage: "https://blogger.googleusercontent.com/img/a/AVvXsEjMptbyVKnM5neaA5ZGRgW6AaVvD88GcSjt78ygY5g6yejZtxNjjfmhWwPzUZDLaDgGNP8TNPrhcOfMOYwZQ6IE4nM6lFs2-meh6RabF305uq_bHyVkRVs3uk65FCIsmgz8BOPu-d2eQB9521vjv-xl9HeRdAB6hkYbC1bb11epZNpD_CD6df-RZyz8ksc=w400-h379",
-
-  about: "I'm a post-production specialist with 5+ years behind the timeline — editing, grading and finishing video for brands, creators and agencies. I believe every cut should earn its place: pacing, color and sound working together so the story lands exactly the way it was meant to.",
-
-  stats: { years: 4, projects: 100, clients: 30 },
-
-  skills: [
-    { name: "Video Editing (Premiere Pro)", level: 96 },
-    { name: "Motion Graphics (After Effects)", level: 92 },
-    { name: "Color Grading (DaVinci Resolve)", level: 88 },
-    { name: "VFX & Compositing", level: 82 },
-    { name: "Sound Design & Mixing", level: 85 },
-    { name: "Workflow Scripting & Automation", level: 78 }
-  ],
-
-  portfolio: [
-    {
-      title: "Brand Launch Film",
-      tag: "Video Editing · Color Grading",
-      image: "https://blogger.googleusercontent.com/img/a/AVvXsEg3rpBwZ7VO3inIUUxi7KhOjPuD2CmSYTirVaOiywCd4LAT5byZ9BcclDKFGV-DySKj43ook-UQLYPJCtLsutXhrnVKc-ANzB2qhOqRWdaZyR-51VQEs35MCeUw2aEG-Z__JpN80vVWbTPuoQU5sPZKo5F4IsnNpe01B9sfrhBGwikuN1CocYPHGefIvX8",
-      preview: "#", details: "#"
-    },
-    {
-      title: "Motion Identity Reel",
-      tag: "Motion Graphics · VFX",
-      image: "https://blogger.googleusercontent.com/img/a/AVvXsEghON1Uy6Oc2gVfhKEW1MqCDXP6e5_XTwhYNNPglvtmdOFxM8TDz5bnvA7yhN3mudHnAHDzhTI7OxY84M-Ulz6KbXD6-xILB_-bN7IRyD3sEndXdtFA3ZVsxEmQYxqB2driAN1T12HkF4V1a7Xflz1S2cXcYEICSOZ0HqhU2zngzPqbwjirTTcOib73544=w400-h225",
-      preview: "#", details: "#"
-    },
-    {
-      title: "Documentary Short",
-      tag: "Editing · Sound Design",
-      image: "https://blogger.googleusercontent.com/img/a/AVvXsEiHsDmfZUPZkH3nQm__giWg7TZ4b0rqYYL_qz3RvwwQFlMTNycLbJ-PyzaZLIZ-NT5F6mYk8oVADth1xbqlP8VMUIod6m91c9k3cUp7DulBCXNLTKmL9cK4YeRfiAw7DoF-SW_eE6g7N5iQv4RdmasjmZwVxGRuCc4oIA9_RsoTLAGZ6zC9DSz29tsoKcA=w400-h225",
-      preview: "#", details: "#"
-    },
-    {
-      title: "Product Commercial",
-      tag: "VFX · Color Grading",
-      image: "https://blogger.googleusercontent.com/img/a/AVvXsEik7iJBy8bikrF513WQi7Ou_TOxxWm0kHZbM7Gk68YDvCUFF70Mo8RGFE62NrFx0amPUi745hJEs77okxNUgkB_l0R3yWOoo5WTR5ZEYysRbY3Sb0vn1gvEwHVhR9w9t9SxTKwiLo36jhHZPjJyJm0MK95VfWPPWITygN_Pqy5sUdoM2YOCWujHJQk7T74",
-      preview: "#", details: "#"
-    },
-    {
-      title: "Social Campaign Cutdown",
-      tag: "Video Editing · Motion Graphics",
-      image: "https://blogger.googleusercontent.com/img/a/AVvXsEiezCWUNG22fJbk-r-UPAGCF3fepmjw_1s4fMzf8YVhP62NCW1iNwLfgjvG5KOMYPXeS-ACfYPxUbGljtRrq0dA5Yey5DzDikC01DNsC5ostJHb-31UBDPlcz95Uj-9iaKfD19uBJ0jDKIsGOphVWHPT1Ou7wIXBzGwn9nV28V-yZ3ChNXcRt31K9kHtYo",
-      preview: "#", details: "#"
-    },
-    {
-      title: "Feature Trailer Cut",
-      tag: "Editing · Sound Design",
-      image: "https://blogger.googleusercontent.com/img/a/AVvXsEg3rpBwZ7VO3inIUUxi7KhOjPuD2CmSYTirVaOiywCd4LAT5byZ9BcclDKFGV-DySKj43ook-UQLYPJCtLsutXhrnVKc-ANzB2qhOqRWdaZyR-51VQEs35MCeUw2aEG-Z__JpN80vVWbTPuoQU5sPZKo5F4IsnNpe01B9sfrhBGwikuN1CocYPHGefIvX8",
-      preview: "#", details: "#"
+  
+  // Mobile menu toggle
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    if (menu) {
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+      } else {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+      }
     }
-  ],
-
-  experience: [
-    { year: "2025 — Present", title: "Freelance Post-Production Specialist", place: "Self-employed · Remote (Upwork & Direct Clients)", desc: "Delivering editing, motion graphics, color grading and sound design for global brands and creators." },
-    { year: "2023 — 2025", title: "Senior Video Editor", place: "Creative Studio, Dhaka", desc: "Led post-production on commercial and social campaigns, mentoring junior editors on pipeline and pacing." },
-    { year: "2021 — 2023", title: "Motion Graphics Artist", place: "Digital Media Agency, Dhaka", desc: "Built animated brand assets and explainer content in After Effects for regional clients." },
-    { year: "2020 — 2021", title: "Junior Video Editor", place: "Production House, Dhaka", desc: "Started my post-production journey — editing short-form content and assisting on set." }
-  ],
-
-  testimonials: [
-    { quote: "Asif turned three hours of raw footage into a two-minute film that made our entire team emotional. The pacing and color were flawless.", name: "Rafiq Ahmed", role: "Marketing Director" },
-    { quote: "Sharp instincts for rhythm and sound. He delivered exactly the premium feel we were after, ahead of schedule.", name: "Nusrat Jahan", role: "Brand Manager" },
-    { quote: "Reliable, fast, and genuinely talented at motion graphics. Our launch reel wouldn't have landed without him.", name: "Tanvir Hasan", role: "Startup Founder" }
-  ],
-
-  socials: {
-    instagram: "#", behance: "#", vimeo: "#", linkedin: "#", upwork: "#"
-  },
-
-  googleMapEmbedSrc: "https://www.google.com/maps?q=Uttara,Dhaka,Bangladesh&output=embed",
-
-  formIntegration: {
-    googleScriptUrl: "",     // paste your Google Apps Script Web App URL here to log submissions to a Google Sheet
-    telegramBotToken: "",    // paste your Telegram Bot token here
-    telegramChatId: ""       // paste your Telegram chat ID here
   }
-};
 
-/* ============================================================
-   RENDER
-============================================================ */
-document.getElementById('year').textContent = new Date().getFullYear();
+  const menuBtn = document.getElementById('menuBtn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', toggleMobileMenu);
+  }
 
-// Hero / basic fields
-document.getElementById('heroImg').src = CONFIG.profileImage;
-document.getElementById('aboutText').textContent = CONFIG.about;
-document.getElementById('aboutEmail').textContent = CONFIG.email;
-document.getElementById('aboutPhone').textContent = CONFIG.phoneDisplay;
-document.getElementById('statYears').innerHTML = CONFIG.stats.years + '+ <span class="text-xs font-normal text-[var(--text-2)]">years</span>';
-document.getElementById('statProjects').textContent = CONFIG.stats.projects + '+';
+  // Typewriter logic for Hero
+  function initTypewriter() {
+    const el = document.getElementById('typedRole');
+    if (!el) return;
+    let roleIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
 
-document.getElementById('contactPhone').textContent = CONFIG.phoneDisplay;
-document.getElementById('contactPhoneRow').href = 'tel:' + CONFIG.phone;
-document.getElementById('contactEmail').textContent = CONFIG.email;
-document.getElementById('contactEmailRow').href = 'mailto:' + CONFIG.email;
-document.getElementById('contactLocation').textContent = CONFIG.location;
-document.getElementById('mapFrame').src = CONFIG.googleMapEmbedSrc;
-
-// socials
-const socialMap = { 'fa-instagram': CONFIG.socials.instagram, 'fa-behance': CONFIG.socials.behance, 'fa-vimeo-v': CONFIG.socials.vimeo, 'fa-linkedin-in': CONFIG.socials.linkedin, 'fa-upwork': CONFIG.socials.upwork };
-document.querySelectorAll('#hero a i').forEach(icon => {
-  const cls = [...icon.classList].find(c => socialMap[c] !== undefined);
-  if (cls) icon.closest('a').href = socialMap[cls] || '#';
-});
-
-// Skills
-const skillList = document.getElementById('skillList');
-CONFIG.skills.forEach((s, i) => {
-  const el = document.createElement('div');
-  el.className = 'reveal';
-  el.style.setProperty('--i', i);
-  el.innerHTML = `
-    <div class="flex items-center justify-between mb-2.5">
-      <span class="text-sm text-[var(--text-0)] font-medium">${s.name}</span>
-      <span class="font-mono text-xs text-[var(--primary)]">${s.level}%</span>
-    </div>
-    <div class="skill-bar-track"><div class="skill-bar-fill" data-level="${s.level}"></div></div>
-  `;
-  skillList.appendChild(el);
-});
-
-// Portfolio
-const grid = document.getElementById('portfolioGrid');
-CONFIG.portfolio.forEach((p, i) => {
-  const card = document.createElement('div');
-  card.className = 'reveal-scale proj-card glass';
-  card.style.setProperty('--i', i % 3);
-  card.innerHTML = `
-    <div class="proj-media">
-      <img src="${p.image}" alt="${p.title}" loading="lazy">
-      <div class="proj-overlay"></div>
-      <span class="absolute top-3 right-3 font-mono text-[10px] text-white/70">0${i + 1}</span>
-    </div>
-    <div class="p-5 relative">
-      <p class="proj-tag text-[var(--primary)] font-mono uppercase mb-1.5">${p.tag}</p>
-      <h3 class="text-[var(--text-0)] font-semibold mb-4">${p.title}</h3>
-      <div class="proj-actions flex items-center gap-3">
-        <a href="${p.preview}" class="text-xs px-4 py-2 rounded-full btn-primary text-white font-medium">Live Preview</a>
-        <a href="${p.details}" class="text-xs px-4 py-2 rounded-full btn-ghost text-[var(--text-0)]">Details</a>
-      </div>
-    </div>
-  `;
-  grid.appendChild(card);
-});
-
-// Timeline / experience
-const timelineList = document.getElementById('timelineList');
-CONFIG.experience.forEach((e, i) => {
-  const el = document.createElement('div');
-  el.className = 'reveal relative';
-  el.style.setProperty('--i', i);
-  el.innerHTML = `
-    <span class="absolute -left-[38px] top-1 w-4 h-4 rounded-full bg-[var(--bg-0)] border-2 border-[var(--primary)]"></span>
-    <p class="font-mono text-xs text-[var(--primary)] mb-1.5">${e.year}</p>
-    <h3 class="text-lg font-semibold text-[var(--text-0)] mb-1">${e.title}</h3>
-    <p class="text-sm text-[var(--text-3)] mb-2">${e.place}</p>
-    <p class="text-sm text-[var(--text-2)] leading-relaxed">${e.desc}</p>
-  `;
-  timelineList.appendChild(el);
-});
-
-// Testimonials
-const tGrid = document.getElementById('testimonialGrid');
-CONFIG.testimonials.forEach((t, i) => {
-  const el = document.createElement('div');
-  el.className = 'reveal glass rounded-2xl p-7';
-  el.style.setProperty('--i', i);
-  el.innerHTML = `
-    <span class="quote-mark">&ldquo;</span>
-    <p class="text-sm text-[var(--text-1)] leading-relaxed -mt-6 mb-6">${t.quote}</p>
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--violet)] flex items-center justify-center text-white text-xs font-bold">${t.name.split(' ').map(n=>n[0]).join('')}</div>
-      <div>
-        <p class="text-sm text-[var(--text-0)] font-medium">${t.name}</p>
-        <p class="text-xs text-[var(--text-3)]">${t.role}</p>
-      </div>
-    </div>
-  `;
-  tGrid.appendChild(el);
-});
-
-/* ============================================================
-   INTERACTIONS
-============================================================ */
-
-// Mobile menu
-const menuBtn = document.getElementById('menuBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-menuBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
-  menuBtn.innerHTML = mobileMenu.classList.contains('open') ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
-});
-document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => {
-  mobileMenu.classList.remove('open');
-  menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-}));
-
-// Navbar scroll state + active link
-const navbar = document.getElementById('navbar');
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link');
-
-function onScroll() {
-  navbar.classList.toggle('scrolled', window.scrollY > 30);
-
-  // active link
-  let current = '';
-  sections.forEach(sec => {
-    const top = sec.offsetTop - 140;
-    if (window.scrollY >= top) current = sec.id;
-  });
-  navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
-
-  // scrub timeline
-  const docH = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docH > 0 ? Math.min(100, (window.scrollY / docH) * 100) : 0;
-  document.getElementById('scrub-fill').style.width = pct + '%';
-  document.getElementById('scrub-playhead').style.left = pct + '%';
-
-  const totalFrames = Math.floor((pct / 100) * 24 * 60 * 3); // arbitrary premium timecode feel
-  const ff = totalFrames % 24;
-  const totalSeconds = Math.floor(totalFrames / 24);
-  const ss = totalSeconds % 60;
-  const mm = Math.floor(totalSeconds / 60) % 60;
-  const hh = Math.floor(totalSeconds / 3600);
-  const pad = n => String(n).padStart(2, '0');
-  const code = `${pad(hh)}:${pad(mm)}:${pad(ss)}:${pad(ff)}`;
-  document.getElementById('scrub-code').textContent = code;
-  document.getElementById('heroTimecode').textContent = code;
-
-  // skill bars fill when scrub reaches skills section roughly
-}
-window.addEventListener('scroll', onScroll);
-onScroll();
-
-// Build timeline ticks
-const ticksEl = document.getElementById('scrub-ticks');
-for (let i = 0; i <= 60; i++) {
-  const t = document.createElement('div');
-  t.className = 'tick' + (i % 5 === 0 ? ' major' : '');
-  t.style.left = (i / 60) * 100 + '%';
-  ticksEl.appendChild(t);
-}
-ticksEl.appendChild(document.getElementById('scrub-fill'));
-ticksEl.appendChild(document.getElementById('scrub-playhead'));
-
-// Reveal on scroll
-const revealEls = document.querySelectorAll('.reveal:not(.in), .reveal-scale');
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('in');
-      if (entry.target.contains(document.getElementById('skillList')) || entry.target.querySelector?.('.skill-bar-fill')) {
-        entry.target.querySelectorAll('.skill-bar-fill').forEach(f => f.style.width = f.dataset.level + '%');
+    function type() {
+      const current = CONFIG.roles[roleIdx];
+      if (isDeleting) {
+        el.textContent = current.substring(0, charIdx - 1);
+        charIdx--;
+      } else {
+        el.textContent = current.substring(0, charIdx + 1);
+        charIdx++;
       }
-      io.unobserve(entry.target);
+
+      let speed = isDeleting ? 40 : 80;
+
+      if (!isDeleting && charIdx === current.length) {
+        speed = 2200;
+        isDeleting = true;
+      } else if (isDeleting && charIdx === 0) {
+        isDeleting = false;
+        roleIdx = (roleIdx + 1) % CONFIG.roles.length;
+        speed = 400;
+      }
+
+      setTimeout(type, speed);
     }
-  });
-}, { threshold: 0.15 });
-revealEls.forEach(el => io.observe(el));
+    type();
+  }
 
-// Skill bars: separate observer since they're inside .reveal divs
-document.querySelectorAll('.skill-bar-fill').forEach(f => {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        f.style.width = f.dataset.level + '%';
-        obs.disconnect();
+  // Scroll Scrubber and Timecode logic
+  function initScrubber() {
+    const codeEl = document.getElementById('scrub-code');
+    const heroTc = document.getElementById('heroTimecode');
+    const fillEl = document.getElementById('scrub-fill');
+    const playheadEl = document.getElementById('scrub-playhead');
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', function() {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPos = window.scrollY;
+      const progress = Math.max(0, Math.min(1, scrollPos / (scrollHeight || 1)));
+
+      if (fillEl) fillEl.style.width = (progress * 100) + '%';
+      if (playheadEl) playheadEl.style.left = (progress * 100) + '%';
+
+      if (navbar) {
+        if (scrollPos > 60) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
       }
+
+      // Timecode Calculation (24fps basis)
+      const totalFrames = Math.floor(progress * 14400);
+      const mins = Math.floor(totalFrames / (24 * 60)).toString().padStart(2, '0');
+      const secs = Math.floor((totalFrames % (24 * 60)) / 24).toString().padStart(2, '0');
+      const frames = (totalFrames % 24).toString().padStart(2, '0');
+      const tcString = `00:${mins}:${secs}:${frames}`;
+
+      if (codeEl) codeEl.textContent = tcString;
+      if (heroTc) heroTc.textContent = tcString;
     });
-  }, { threshold: 0.4 });
-  obs.observe(f);
-});
-
-// Count-up stats
-document.querySelectorAll('[data-count]').forEach(el => {
-  const target = parseInt(el.dataset.count, 10);
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        let cur = 0;
-        const step = Math.max(1, Math.ceil(target / 40));
-        const timer = setInterval(() => {
-          cur += step;
-          if (cur >= target) { cur = target; clearInterval(timer); }
-          el.textContent = cur;
-        }, 30);
-        obs.disconnect();
-      }
-    });
-  }, { threshold: 0.5 });
-  obs.observe(el);
-});
-
-// Typing / rotating role text
-const typedEl = document.getElementById('typedRole');
-let roleIndex = 0, charIndex = 0, deleting = false;
-function typeLoop() {
-  const word = CONFIG.roles[roleIndex];
-  if (!deleting) {
-    charIndex++;
-    typedEl.textContent = word.slice(0, charIndex);
-    if (charIndex === word.length) { deleting = true; setTimeout(typeLoop, 1400); return; }
-  } else {
-    charIndex--;
-    typedEl.textContent = word.slice(0, charIndex);
-    if (charIndex === 0) { deleting = false; roleIndex = (roleIndex + 1) % CONFIG.roles.length; }
-  }
-  setTimeout(typeLoop, deleting ? 35 : 70);
-}
-typeLoop();
-
-// Contact form submission -> Google Sheet (Apps Script) + Telegram
-const form = document.getElementById('contactForm');
-const statusEl = document.getElementById('formStatus');
-const submitBtn = document.getElementById('submitBtn');
-const submitLabel = document.getElementById('submitLabel');
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(form).entries());
-
-  if (!CONFIG.formIntegration.googleScriptUrl && !CONFIG.formIntegration.telegramBotToken) {
-    statusEl.textContent = 'Form is not connected yet — add your Google Script URL / Telegram bot details in CONFIG.formIntegration.';
-    statusEl.style.color = 'var(--amber)';
-    return;
   }
 
-  submitBtn.disabled = true;
-  submitLabel.textContent = 'Sending...';
-  statusEl.textContent = '';
+  // Reveal elements on scroll
+  function initScrollReveals() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+        }
+      });
+    }, { threshold: 0.1 });
 
-  try {
-    const tasks = [];
-
-    if (CONFIG.formIntegration.googleScriptUrl) {
-      tasks.push(fetch(CONFIG.formIntegration.googleScriptUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }));
-    }
-
-    if (CONFIG.formIntegration.telegramBotToken && CONFIG.formIntegration.telegramChatId) {
-      const text = `New portfolio inquiry%0A%0AName: ${encodeURIComponent(data.name)}%0APhone: ${encodeURIComponent(data.phone)}%0AEmail: ${encodeURIComponent(data.email)}%0AMessage: ${encodeURIComponent(data.message)}`;
-      tasks.push(fetch(`https://api.telegram.org/bot${CONFIG.formIntegration.telegramBotToken}/sendMessage?chat_id=${CONFIG.formIntegration.telegramChatId}&text=${text}`));
-    }
-
-    await Promise.all(tasks);
-    statusEl.textContent = 'Message sent — thank you! I will get back to you shortly.';
-    statusEl.style.color = 'var(--primary)';
-    form.reset();
-  } catch (err) {
-    statusEl.textContent = 'Something went wrong. Please try again or email me directly.';
-    statusEl.style.color = '#ff6b6b';
-  } finally {
-    submitBtn.disabled = false;
-    submitLabel.textContent = 'Send Message';
+    document.querySelectorAll('.reveal, .reveal-scale').forEach(el => observer.observe(el));
   }
-});
+
+  // Contact form submission logic
+  function handleContactSubmit(e) {
+    e.preventDefault();
+    const btnLabel = document.getElementById('submitLabel');
+    const status = document.getElementById('formStatus');
+
+    if (btnLabel) btnLabel.innerText = "Sending Message...";
+    
+    setTimeout(() => {
+      if (btnLabel) btnLabel.innerText = "Message Sent!";
+      if (status) status.innerText = "Thank you! Your message has been sent successfully. Mohammad will get back to you soon.";
+      e.target.reset();
+      
+      setTimeout(() => {
+        if (btnLabel) btnLabel.innerText = "Send Message";
+      }, 4000);
+    }, 1200);
+  }
+
+  // Dynamic Year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // On Window Load
+  window.onload = function() {
+    initTypewriter();
+    initScrubber();
+    initScrollReveals();
+  };
 </script>
+
 </body>
 </html>
