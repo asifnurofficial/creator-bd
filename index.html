@@ -72,50 +72,98 @@
   }
 
   /* Glassmorphism Cards */
+  /* --mx/--my are set by the pointer-spotlight script; off-card by default */
+  /* Frosted glass: milky translucent fill, heavy blur, crisp white edge */
   .glass{
-    background: linear-gradient(160deg, rgba(255,255,255,0.055), rgba(255,255,255,0.015));
-    border:1px solid var(--line);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background:
+      radial-gradient(380px circle at var(--mx,-600px) var(--my,-600px), rgba(255,255,255,.12), transparent 45%),
+      linear-gradient(150deg, rgba(255,255,255,0.13), rgba(255,255,255,0.04));
+    border:1px solid rgba(255,255,255,.24);
+    backdrop-filter: blur(26px) saturate(180%);
+    -webkit-backdrop-filter: blur(26px) saturate(180%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.25), inset 0 -1px 0 rgba(255,255,255,.04), 0 12px 40px -16px rgba(0,0,0,.6);
   }
   .glass-strong{
-    background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-    border:1px solid var(--line-strong);
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    background:
+      radial-gradient(460px circle at var(--mx,-600px) var(--my,-600px), rgba(255,255,255,.14), transparent 45%),
+      linear-gradient(150deg, rgba(255,255,255,0.17), rgba(255,255,255,0.05));
+    border:1.5px solid rgba(255,255,255,.38);
+    backdrop-filter: blur(32px) saturate(190%);
+    -webkit-backdrop-filter: blur(32px) saturate(190%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 24px 70px -24px rgba(0,0,0,.75);
   }
+  /* Doubled class outranks Tailwind's border-[...] colour utilities so every glass edge stays white;
+     Tailwind hover:border-* classes still win on hover */
+  .glass.glass{ border-color: rgba(255,255,255,.24); }
+  .glass-strong.glass-strong{ border-color: rgba(255,255,255,.38); }
+
+  /* Transparent form fields with a white outline (contact form) */
+  .glass-input{
+    background: rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.32);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: border-color .3s, background .3s, box-shadow .3s;
+  }
+  .glass-input::placeholder{ color: rgba(255,255,255,.5); }
+  .glass-input:focus{ border-color: rgba(255,255,255,.8); background: rgba(255,255,255,.1); box-shadow: 0 0 0 4px rgba(58,134,255,.2); }
+  .field-icon{ position:absolute; right:18px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,.75); font-size:17px; pointer-events:none; transition:color .3s; }
+  .field-icon.top{ top:20px; transform:none; }
+  .relative:focus-within > .field-icon{ color:#fff; }
+  /* Light glass washes out over the bright map tiles, so this chip uses smoked glass */
+  .glass.map-chip{ background: rgba(8,12,20,.72); }
 
   /* Typography & Gradients */
   .grad-text{
-    background: linear-gradient(100deg, var(--cyan) 0%, var(--primary) 45%, var(--violet) 100%);
+    background: linear-gradient(100deg, var(--cyan) 0%, var(--primary) 25%, var(--violet) 50%, var(--primary) 75%, var(--cyan) 100%);
+    background-size:200% auto;
     -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation: gradShift 7s ease-in-out infinite;
   }
+  @keyframes gradShift{ 0%,100%{ background-position:0% center } 50%{ background-position:100% center } }
   .grad-border{
     position:relative;
   }
+  @property --ang{ syntax:'<angle>'; initial-value:0deg; inherits:false; }
   .grad-border::before{
-    content:''; position:absolute; inset:0; padding:1px; border-radius:inherit;
-    background:linear-gradient(120deg, var(--cyan), var(--primary), var(--violet));
+    content:''; position:absolute; inset:0; padding:1.5px; border-radius:inherit;
+    background:conic-gradient(from var(--ang), var(--cyan), var(--primary), var(--violet), transparent 70%, var(--cyan));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor; mask-composite: exclude;
-    opacity:.55; pointer-events:none;
+    opacity:.85; pointer-events:none;
+    animation: spinBorder 6s linear infinite;
   }
+  @keyframes spinBorder{ to{ --ang:360deg } }
 
   /* Buttons */
   .btn-primary{
-    background: linear-gradient(100deg, var(--primary), var(--violet));
-    box-shadow: 0 8px 30px -8px rgba(58,134,255,.55);
-    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+    position:relative; overflow:hidden; isolation:isolate;
+    background: linear-gradient(100deg, var(--primary), var(--violet), var(--primary));
+    background-size:200% 100%;
+    border:1px solid rgba(255,255,255,.35);
+    box-shadow: 0 8px 30px -8px rgba(58,134,255,.55), inset 0 1px 0 rgba(255,255,255,.35);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, background-position .6s;
   }
+  /* Light sheen that sweeps across on hover */
+  .btn-primary::after{
+    content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background:linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+    transform:translateX(-120%); transition: transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .btn-primary:hover{ background-position:100% 0; }
+  .btn-primary:hover::after{ transform:translateX(120%); }
   .btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 14px 40px -8px rgba(58,134,255,.75); }
   .btn-ghost{
-    border:1px solid var(--line-strong);
+    border:1px solid rgba(255,255,255,.4);
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
     transition: all .35s cubic-bezier(.2,.8,.2,1);
   }
-  .btn-ghost:hover{ border-color: var(--primary); background: rgba(58,134,255,.08); transform: translateY(-3px); }
+  .btn-ghost:hover{ border-color: rgba(255,255,255,.75); background: rgba(255,255,255,.16); transform: translateY(-3px); }
 
   /* Animations */
-  .reveal{ opacity:0; transform: translateY(36px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal{ opacity:0; transform: translateY(36px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+  .reveal.settled{ transition-delay:0ms; }
   .reveal.in{ opacity:1; transform:none; }
   .reveal-scale{ opacity:0; transform: scale(.92); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
   .reveal-scale.in{ opacity:1; transform:none; }
@@ -231,6 +279,105 @@
     #hero .btn-primary,#hero .btn-ghost{width:100%;justify-content:center}
     #navbar nav{height:70px;padding-left:18px;padding-right:18px}
   }
+
+  /* ===== Glass & Motion Layer ===== */
+
+  /* Drifting aurora behind everything (transform-only animation, no live blur) */
+  .aurora{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .aurora span{ position:absolute; border-radius:50%; animation: drift 24s ease-in-out infinite alternate; will-change:transform; }
+  /* Colour behind the glass is what makes the frost visible, so these are fairly strong */
+  .aurora span:nth-child(1){ width:60vmax; height:60vmax; left:-15vmax; top:-20vmax; background:radial-gradient(circle, rgba(58,134,255,.42), transparent 62%); }
+  .aurora span:nth-child(2){ width:55vmax; height:55vmax; right:-20vmax; top:20%; background:radial-gradient(circle, rgba(131,56,236,.38), transparent 62%); animation-duration:30s; animation-delay:-8s; }
+  .aurora span:nth-child(3){ width:50vmax; height:50vmax; left:25%; bottom:-25vmax; background:radial-gradient(circle, rgba(94,231,255,.24), transparent 62%); animation-duration:36s; animation-delay:-16s; }
+  .aurora span:nth-child(4){ width:34vmax; height:34vmax; left:40%; top:30%; background:radial-gradient(circle, rgba(255,90,170,.16), transparent 62%); animation-duration:40s; animation-delay:-4s; }
+  .aurora span:nth-child(5){ width:40vmax; height:40vmax; left:-10vmax; bottom:-10vmax; background:radial-gradient(circle, rgba(131,56,236,.26), transparent 62%); animation-duration:34s; animation-delay:-20s; }
+  @keyframes drift{
+    0%{ transform:translate(0,0) scale(1) }
+    50%{ transform:translate(10vw,8vh) scale(1.12) }
+    100%{ transform:translate(-8vw,12vh) scale(.94) }
+  }
+
+  /* Soft light that follows the mouse */
+  #cursorGlow{
+    position:fixed; left:0; top:0; width:640px; height:640px; margin:-320px 0 0 -320px; z-index:0;
+    border-radius:50%; pointer-events:none; opacity:0; transition:opacity .5s;
+    background:radial-gradient(circle, rgba(58,134,255,.10), rgba(131,56,236,.05) 35%, transparent 62%);
+  }
+  #cursorGlow.on{ opacity:1; }
+  @media (hover:none){ #cursorGlow{ display:none; } }
+
+  /* Hero headline: lines slide up on load */
+  .hero-title .line{ display:block; overflow:hidden; padding-bottom:.08em; }
+  .hero-title .line > span{ display:inline-block; animation: lineUp 1.1s cubic-bezier(.2,.8,.2,1) both; }
+  .hero-title .line:nth-child(2) > span{ animation-delay:.15s; }
+  @keyframes lineUp{ from{ transform:translateY(105%); opacity:0 } to{ transform:none; opacity:1 } }
+
+  /* Floating glass navbar pill once scrolled */
+  #navbar nav{ border:1px solid transparent; border-radius:999px; transition: all .5s cubic-bezier(.2,.8,.2,1); }
+  #navbar.scrolled{ background:transparent; backdrop-filter:none; -webkit-backdrop-filter:none; border-color:transparent; }
+  #navbar.scrolled nav{
+    margin-top:10px; height:62px; max-width:min(1120px, calc(100% - 24px));
+    background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.32);
+    backdrop-filter:blur(22px) saturate(170%); -webkit-backdrop-filter:blur(22px) saturate(170%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 18px 50px -20px rgba(0,0,0,.8);
+  }
+  #mobileMenu{ animation: menuIn .35s cubic-bezier(.2,.8,.2,1); }
+  @keyframes menuIn{ from{ opacity:0; transform:translateY(-10px) scale(.98) } to{ opacity:1; transform:none } }
+
+  /* 3D tilt (enabled by script on mouse devices only) */
+  .tilting{ transition: transform .12s ease-out !important; }
+  [data-tilt]{ transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+
+  /* Portfolio cards */
+  .yt-card:hover{ box-shadow: 0 24px 60px -24px rgba(58,134,255,.45); }
+  .yt-card.pop{ animation: popIn .5s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes popIn{ from{ opacity:0; transform:translateY(18px) scale(.97) } to{ opacity:1; transform:none } }
+  .filter-count{ font-size:10px; padding:1px 7px; border-radius:99px; background:rgba(255,255,255,.08); color:var(--text-2); }
+  .active-filter .filter-count{ background:var(--primary); color:#fff; }
+  @media (max-width:640px){
+    #ytFilterContainer{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin-right:-20px; padding-right:20px; }
+    #ytFilterContainer::-webkit-scrollbar{ display:none; }
+    .yt-filter-btn{ flex-shrink:0; white-space:nowrap; }
+  }
+
+  /* Services: slow-spinning scope rings, lift on hover */
+  .scope-ring{ animation: spin 22s linear infinite; }
+  .scope-ring + .scope-ring{ animation-direction:reverse; animation-duration:16s; border-color:rgba(58,134,255,.35); }
+  @keyframes spin{ to{ transform:rotate(360deg) } }
+  #skills .grid > .glass{ transition-property: opacity, transform, border-color; transition-duration: .9s, .5s, .3s; }
+  #skills .grid > .glass.in:hover{ transform:translateY(-8px); border-color:rgba(58,134,255,.45); }
+
+  /* Skill bars: glowing fill */
+  .skill-bar-fill{ box-shadow:0 0 14px rgba(58,134,255,.55); }
+
+  /* Timeline dots pulse */
+  #experience .group > div:first-child{ animation: dotPulse 2.4s ease-in-out infinite; }
+  @keyframes dotPulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(58,134,255,.55), 0 0 12px var(--primary) } 50%{ box-shadow:0 0 0 7px rgba(58,134,255,0), 0 0 12px var(--primary) } }
+
+  /* Video modal entrance */
+  #ytModal:not(.hidden) > div{ animation: modalIn .45s cubic-bezier(.2,.8,.2,1); }
+  @keyframes modalIn{ from{ opacity:0; transform:translateY(24px) scale(.96) } to{ opacity:1; transform:none } }
+
+  /* Floating quick actions */
+  .fab-stack{ position:fixed; right:18px; bottom:18px; z-index:70; display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .fab{ width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; transition: transform .3s cubic-bezier(.2,.8,.2,1), opacity .3s; }
+  .fab-wa{ position:relative; font-size:26px; background:linear-gradient(135deg,#25d366,#128c7e); box-shadow:0 12px 30px -8px rgba(37,211,102,.6); }
+  .fab-wa::before{ content:''; position:absolute; inset:0; border-radius:50%; border:2px solid rgba(37,211,102,.7); animation: ring 2.4s ease-out infinite; }
+  .fab-wa:hover{ transform:translateY(-3px) scale(1.06); }
+  @keyframes ring{ from{ transform:scale(1); opacity:.9 } to{ transform:scale(1.7); opacity:0 } }
+  #toTop{ width:44px; height:44px; font-size:15px; opacity:0; pointer-events:none; transform:translateY(12px); }
+  #toTop.show{ opacity:1; pointer-events:auto; transform:none; }
+  #toTop.show:hover{ transform:translateY(-3px); }
+
+  /* Mobile: clear the fixed scrub bar + navbar (114px) so they don't cover the hero card */
+  @media (max-width:768px){ #hero{ padding-top:150px !important; } }
+
+  /* Respect users who prefer less motion */
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+    .reveal, .reveal-scale{ opacity:1; transform:none; }
+    #cursorGlow{ display:none; }
+  }
 </style>
 </head>
 
@@ -239,9 +386,8 @@
 <!-- Ambient Orbs & Grids -->
 <div class="grain"></div>
 <div class="grid-bg"></div>
-<div class="glow-orb float-slow" style="width:520px;height:520px;top:-160px;left:-160px;background:radial-gradient(circle,rgba(58,134,255,.28),transparent 70%);"></div>
-<div class="glow-orb float-slower" style="width:480px;height:480px;top:30%;right:-200px;background:radial-gradient(circle,rgba(131,56,236,.22),transparent 70%);"></div>
-<div class="glow-orb float-slow" style="width:420px;height:420px;bottom:-140px;left:20%;background:radial-gradient(circle,rgba(94,231,255,.14),transparent 70%);"></div>
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+<div id="cursorGlow" aria-hidden="true"></div>
 
 <div id="scrub-track">
   <span id="scrub-code" class="font-mono">00:00:00:00</span>
@@ -268,7 +414,7 @@
     <a href="#contact" class="hidden md:inline-flex btn-primary text-sm font-medium text-white px-5 py-2.5 rounded-full">
       Start a Project
     </a>
-    <button id="menuBtn" onclick="toggleMobileMenu()" class="md:hidden text-[var(--text-0)] text-xl"><i class="fa-solid fa-bars"></i></button>
+    <button id="menuBtn" onclick="toggleMobileMenu()" aria-label="Open menu" aria-expanded="false" class="md:hidden w-11 h-11 rounded-full glass flex items-center justify-center text-[var(--text-0)] text-lg"><i class="fa-solid fa-bars"></i></button>
   </nav>
   <div id="mobileMenu" class="hidden md:hidden absolute top-full left-4 right-4 glass-strong rounded-2xl p-6 flex-col gap-5 text-sm">
     <a href="#about" class="nav-link" onclick="toggleMobileMenu()">About</a>
@@ -288,9 +434,9 @@
         <span class="font-mono text-xs tracking-[.25em] text-[var(--text-2)] uppercase">Now recording · Available for projects</span>
       </div>
 
-      <h1 class="reveal in text-[13vw] leading-[.95] md:text-6xl lg:text-7xl font-extrabold text-[var(--text-0)] mb-6">
-        Cutting stories<br>
-        into <span class="grad-text">motion</span>
+      <h1 class="hero-title reveal in text-[13vw] leading-[.95] md:text-6xl lg:text-7xl font-extrabold text-[var(--text-0)] mb-6">
+        <span class="line"><span>Cutting stories</span></span>
+        <span class="line"><span>into <span class="grad-text">motion</span></span></span>
       </h1>
 
       <p class="reveal in text-base md:text-lg text-[var(--text-2)] max-w-xl mb-3">
@@ -318,7 +464,7 @@
       </div>
     </div>
 
-    <div class="reveal-scale in relative mx-auto w-full max-w-xs sm:max-w-sm">
+    <div class="reveal-scale in relative mx-auto w-full max-w-xs sm:max-w-sm" data-tilt="10">
       <div class="absolute -inset-4 rounded-[28px] grad-border pointer-events-none"></div>
       <div class="glass-strong rounded-[28px] p-4 relative">
         <div class="rounded-[20px] overflow-hidden relative aspect-[4/5] bg-slate-900">
@@ -347,11 +493,11 @@
       <!-- Stat Badges floating on card -->
       <div class="glass rounded-2xl px-5 py-3 absolute -left-8 -bottom-6 float-slow hidden sm:block">
         <p class="text-[10px] font-mono text-[var(--text-3)] tracking-widest uppercase mb-1">Experience</p>
-        <p class="text-2xl font-bold text-[var(--text-0)]">4+ <span class="text-xs font-normal text-[var(--text-2)]">years</span></p>
+        <p class="text-2xl font-bold text-[var(--text-0)]"><span data-count="4">4</span>+ <span class="text-xs font-normal text-[var(--text-2)]">years</span></p>
       </div>
       <div class="glass rounded-2xl px-5 py-3 absolute -right-6 top-8 float-slower hidden sm:block">
         <p class="text-[10px] font-mono text-[var(--text-3)] tracking-widest uppercase mb-1">Projects</p>
-        <p class="text-2xl font-bold text-[var(--text-0)]">100+</p>
+        <p class="text-2xl font-bold text-[var(--text-0)]"><span data-count="100">100</span>+</p>
       </div>
     </div>
   </div>
@@ -394,7 +540,7 @@
     <div class="reveal grid grid-cols-2 gap-5">
       <div class="glass rounded-2xl p-6 col-span-2 flex items-center justify-between">
         <div>
-          <p class="text-3xl sm:text-4xl font-extrabold text-[var(--text-0)] font-mono">100+</p>
+          <p class="text-3xl sm:text-4xl font-extrabold text-[var(--text-0)] font-mono"><span data-count="100">100</span>+</p>
           <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mt-1">Projects Delivered</p>
         </div>
         <div class="w-12 h-12 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/30 flex items-center justify-center text-[var(--primary)]">
@@ -404,7 +550,7 @@
 
       <div class="glass rounded-2xl p-6 flex items-center justify-between">
         <div>
-          <p class="text-3xl font-extrabold text-[var(--text-0)] font-mono">4+</p>
+          <p class="text-3xl font-extrabold text-[var(--text-0)] font-mono"><span data-count="4">4</span>+</p>
           <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mt-1">Years Experience</p>
         </div>
         <div class="w-10 h-10 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/30 flex items-center justify-center text-[var(--primary)]">
@@ -414,7 +560,7 @@
 
       <div class="glass rounded-2xl p-6 flex items-center justify-between">
         <div>
-          <p class="text-3xl font-extrabold text-[var(--text-0)] font-mono">40+</p>
+          <p class="text-3xl font-extrabold text-[var(--text-0)] font-mono"><span data-count="40">40</span>+</p>
           <p class="text-xs text-[var(--text-3)] font-mono uppercase tracking-widest mt-1">Happy Clients</p>
         </div>
         <div class="w-10 h-10 rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/30 flex items-center justify-center text-[var(--primary)]">
@@ -559,7 +705,7 @@
       <!-- Award Competition -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="award documentary">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('J3B3Ycv4SaA', 'Zayed Sustainability Prize — Film 01')">
-          <img src="https://img.youtube.com/vi/J3B3Ycv4SaA/hqdefault.jpg" alt="Zayed Sustainability Prize 01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/J3B3Ycv4SaA/hqdefault.jpg" alt="Zayed Sustainability Prize 01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -591,7 +737,7 @@
 
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="award documentary">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('JP9cjIjKW4Y', 'Zayed Sustainability Prize — Film 02')">
-          <img src="https://img.youtube.com/vi/JP9cjIjKW4Y/hqdefault.jpg" alt="Zayed Sustainability Prize 02" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/JP9cjIjKW4Y/hqdefault.jpg" alt="Zayed Sustainability Prize 02" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -624,7 +770,7 @@
       <!-- Documentary Film Cards -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="documentary">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('drqlQbFnPsU', 'Documentary Film 01')">
-          <img src="https://img.youtube.com/vi/drqlQbFnPsU/hqdefault.jpg" alt="Documentary Film 01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/drqlQbFnPsU/hqdefault.jpg" alt="Documentary Film 01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -654,7 +800,7 @@
 
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="documentary">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('jKOaQvv83GI', 'Documentary Film 02')">
-          <img src="https://img.youtube.com/vi/jKOaQvv83GI/hqdefault.jpg" alt="Documentary Film 02" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/jKOaQvv83GI/hqdefault.jpg" alt="Documentary Film 02" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -684,7 +830,7 @@
 
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="documentary">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('lfk3BiqEoeQ', 'Documentary Film 03')">
-          <img src="https://img.youtube.com/vi/lfk3BiqEoeQ/hqdefault.jpg" alt="Documentary Film 03" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/lfk3BiqEoeQ/hqdefault.jpg" alt="Documentary Film 03" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -715,7 +861,7 @@
       <!-- Meta Advertisements -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('Ls0KPO4sFmY', 'Meta Ad Campaign 01')">
-          <img src="https://img.youtube.com/vi/Ls0KPO4sFmY/hqdefault.jpg" alt="Meta Ad Campaign 01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/Ls0KPO4sFmY/hqdefault.jpg" alt="Meta Ad Campaign 01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -748,7 +894,7 @@
       <!-- Meta Ad Campaign 02 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('Pz7-zR4Hazo', 'Meta Ad Campaign 02')">
-          <img src="https://img.youtube.com/vi/Pz7-zR4Hazo/hqdefault.jpg" alt="Meta Ad Campaign 02" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/Pz7-zR4Hazo/hqdefault.jpg" alt="Meta Ad Campaign 02" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -781,7 +927,7 @@
       <!-- Meta Ad Campaign 03 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('efEYPD-r0UU', 'Meta Ad Campaign 03')">
-          <img src="https://img.youtube.com/vi/efEYPD-r0UU/hqdefault.jpg" alt="Meta Ad Campaign 03" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/efEYPD-r0UU/hqdefault.jpg" alt="Meta Ad Campaign 03" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -814,7 +960,7 @@
       <!-- Meta Ad Campaign 04 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('ZmFDOru2Y78', 'Meta Ad Campaign 04')">
-          <img src="https://img.youtube.com/vi/ZmFDOru2Y78/hqdefault.jpg" alt="Meta Ad Campaign 04" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/ZmFDOru2Y78/hqdefault.jpg" alt="Meta Ad Campaign 04" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -847,7 +993,7 @@
       <!-- Meta Ad Campaign 05 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('pvaWUfM9Itc', 'Meta Ad Campaign 05')">
-          <img src="https://img.youtube.com/vi/pvaWUfM9Itc/hqdefault.jpg" alt="Meta Ad Campaign 05" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/pvaWUfM9Itc/hqdefault.jpg" alt="Meta Ad Campaign 05" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -880,7 +1026,7 @@
       <!-- Meta Ad Campaign 06 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('Qie6aj08rZg', 'Meta Ad Campaign 06')">
-          <img src="https://img.youtube.com/vi/Qie6aj08rZg/hqdefault.jpg" alt="Meta Ad Campaign 06" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/Qie6aj08rZg/hqdefault.jpg" alt="Meta Ad Campaign 06" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -913,7 +1059,7 @@
       <!-- Meta Ad Campaign 07 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('11CgKE759qI', 'Meta Ad Campaign 07')">
-          <img src="https://img.youtube.com/vi/11CgKE759qI/hqdefault.jpg" alt="Meta Ad Campaign 07" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/11CgKE759qI/hqdefault.jpg" alt="Meta Ad Campaign 07" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -946,7 +1092,7 @@
       <!-- Meta Ad Campaign 08 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('kzEJkmst3EY', 'Meta Ad Campaign 08')">
-          <img src="https://img.youtube.com/vi/kzEJkmst3EY/hqdefault.jpg" alt="Meta Ad Campaign 08" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/kzEJkmst3EY/hqdefault.jpg" alt="Meta Ad Campaign 08" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -979,7 +1125,7 @@
       <!-- Meta Ad Campaign 09 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('VV3cLaTPYl4', 'Meta Ad Campaign 09')">
-          <img src="https://img.youtube.com/vi/VV3cLaTPYl4/hqdefault.jpg" alt="Meta Ad Campaign 09" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/VV3cLaTPYl4/hqdefault.jpg" alt="Meta Ad Campaign 09" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -1012,7 +1158,7 @@
       <!-- Meta Ad Campaign 10 -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('4Rx59d7UZJI', 'Meta Ad Campaign 10')">
-          <img src="https://img.youtube.com/vi/4Rx59d7UZJI/hqdefault.jpg" alt="Meta Ad Campaign 10" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/4Rx59d7UZJI/hqdefault.jpg" alt="Meta Ad Campaign 10" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -1045,7 +1191,7 @@
       <!-- Talking Head -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="talking-head">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('E-3AuuuTRtg', 'Talking Head Video 01')">
-          <img src="https://img.youtube.com/vi/E-3AuuuTRtg/hqdefault.jpg" alt="Talking Head Video 01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/E-3AuuuTRtg/hqdefault.jpg" alt="Talking Head Video 01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -1075,7 +1221,7 @@
 
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="talking-head">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('Py3xjqH0v9I', 'Talking Head Video 02')">
-          <img src="https://img.youtube.com/vi/Py3xjqH0v9I/hqdefault.jpg" alt="Talking Head Video 02" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/Py3xjqH0v9I/hqdefault.jpg" alt="Talking Head Video 02" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -1106,7 +1252,7 @@
       <!-- 2D Motion Graphics -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="motion">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('jiV3onTX0Hk', '2D Motion Graphics')">
-          <img src="https://img.youtube.com/vi/jiV3onTX0Hk/hqdefault.jpg" alt="2D Motion Graphics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/jiV3onTX0Hk/hqdefault.jpg" alt="2D Motion Graphics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -1137,7 +1283,7 @@
       <!-- Fiverr / Agency -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="agency ads">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('m0gmqyh9XU0', 'Fiverr Gig Video — Ads Agency')">
-          <img src="https://img.youtube.com/vi/m0gmqyh9XU0/hqdefault.jpg" alt="Fiverr Gig Video" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img loading="lazy" src="https://img.youtube.com/vi/m0gmqyh9XU0/hqdefault.jpg" alt="Fiverr Gig Video" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-red-600 transition-all duration-300">
@@ -1422,22 +1568,22 @@
           <div class="grid sm:grid-cols-2 gap-6">
             <div>
               <label class="block text-xs font-mono text-[var(--text-2)] mb-2 uppercase tracking-wider">Your Name <span class="text-[var(--primary)]">*</span></label>
-              <input type="text" id="contactName" name="name" required placeholder="John Doe" class="w-full px-5 py-4 rounded-2xl text-sm text-[var(--text-0)] bg-white/5 border border-white/10 focus:border-[var(--primary)] focus:bg-white/10 outline-none transition-all">
+              <div class="relative"><input type="text" id="contactName" name="name" required placeholder="John Doe" class="glass-input w-full pl-5 pr-12 py-4 rounded-2xl text-sm text-[var(--text-0)] outline-none"><i class="field-icon fa-regular fa-user" aria-hidden="true"></i></div>
             </div>
             <div>
               <label class="block text-xs font-mono text-[var(--text-2)] mb-2 uppercase tracking-wider">Your Email <span class="text-[var(--primary)]">*</span></label>
-              <input type="email" id="contactEmail" name="email" required placeholder="john@example.com" class="w-full px-5 py-4 rounded-2xl text-sm text-[var(--text-0)] bg-white/5 border border-white/10 focus:border-[var(--primary)] focus:bg-white/10 outline-none transition-all">
+              <div class="relative"><input type="email" id="contactEmail" name="email" required placeholder="john@example.com" class="glass-input w-full pl-5 pr-12 py-4 rounded-2xl text-sm text-[var(--text-0)] outline-none"><i class="field-icon fa-regular fa-envelope" aria-hidden="true"></i></div>
             </div>
           </div>
 
           <div>
             <label class="block text-xs font-mono text-[var(--text-2)] mb-2 uppercase tracking-wider">Project Type / Subject</label>
-            <input type="text" id="contactSubject" name="subject" placeholder="Video Editing, Color Grading, Motion Graphics..." class="w-full px-5 py-4 rounded-2xl text-sm text-[var(--text-0)] bg-white/5 border border-white/10 focus:border-[var(--primary)] focus:bg-white/10 outline-none transition-all">
+            <div class="relative"><input type="text" id="contactSubject" name="subject" placeholder="Video Editing, Color Grading, Motion Graphics..." class="glass-input w-full pl-5 pr-12 py-4 rounded-2xl text-sm text-[var(--text-0)] outline-none"><i class="field-icon fa-solid fa-clapperboard" aria-hidden="true"></i></div>
           </div>
 
           <div>
             <label class="block text-xs font-mono text-[var(--text-2)] mb-2 uppercase tracking-wider">Project Details <span class="text-[var(--primary)]">*</span></label>
-            <textarea id="contactMessage" name="message" rows="5" required placeholder="Tell me about your video, timeline, reference links, or general scope..." class="w-full px-5 py-4 rounded-2xl text-sm text-[var(--text-0)] bg-white/5 border border-white/10 focus:border-[var(--primary)] focus:bg-white/10 outline-none transition-all resize-none"></textarea>
+            <div class="relative"><textarea id="contactMessage" name="message" rows="5" required placeholder="Tell me about your video, timeline, reference links, or general scope..." class="glass-input block w-full pl-5 pr-12 py-4 rounded-2xl text-sm text-[var(--text-0)] outline-none resize-none"></textarea><i class="field-icon top fa-regular fa-pen-to-square" aria-hidden="true"></i></div>
           </div>
 
           <button type="submit" id="contactBtn" class="w-full btn-primary text-white py-4 rounded-2xl font-semibold text-base flex items-center justify-center gap-3 tracking-wide">
@@ -1452,7 +1598,7 @@
 
     <!-- Embedded Google Map of Uttara, Dhaka Studio -->
     <div class="reveal mt-16 glass-strong rounded-[32px] overflow-hidden border border-[var(--line-strong)] p-3 relative">
-      <div class="absolute top-6 left-6 z-10 glass px-4 py-2.5 rounded-2xl border border-[var(--line-strong)] flex items-center gap-3 backdrop-blur-md shadow-lg">
+      <div class="map-chip absolute top-6 left-6 z-10 glass px-4 py-2.5 rounded-2xl border border-[var(--line-strong)] flex items-center gap-3 backdrop-blur-md shadow-lg">
         <span class="w-3 h-3 rounded-full bg-[var(--primary)] animate-ping"></span>
         <div>
           <p class="text-xs font-mono text-[var(--text-0)] font-bold">Editing Studio Location</p>
@@ -1486,7 +1632,7 @@
   <div class="relative w-full max-w-4xl glass-strong rounded-3xl overflow-hidden border border-[var(--line-strong)]">
     <div class="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
       <h3 id="modalTitle" class="text-sm font-semibold text-[var(--text-0)] font-mono">Video Player</h3>
-      <button onclick="closeYtModal()" class="text-[var(--text-2)] hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+      <button onclick="closeYtModal()" aria-label="Close video" class="text-[var(--text-2)] hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="aspect-video w-full">
       <iframe id="modalIframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -1494,13 +1640,29 @@
   </div>
 </div>
 
+<!-- Floating Quick Actions -->
+<div class="fab-stack">
+  <button id="toTop" class="fab glass-strong" aria-label="Back to top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"><i class="fa-solid fa-arrow-up"></i></button>
+  <a href="https://wa.me/8801644337605" target="_blank" rel="noopener" class="fab fab-wa" aria-label="Chat on WhatsApp" title="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+</div>
+
 <script>
 // Mobile Menu Toggle
-function toggleMobileMenu() {
+function toggleMobileMenu(forceClose) {
   const menu = document.getElementById('mobileMenu');
-  menu.classList.toggle('hidden');
-  menu.classList.toggle('flex');
+  const btn = document.getElementById('menuBtn');
+  const open = forceClose ? false : menu.classList.contains('hidden');
+  menu.classList.toggle('hidden', !open);
+  menu.classList.toggle('flex', open);
+  btn.setAttribute('aria-expanded', open);
+  btn.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
 }
+
+// Close the mobile menu when tapping anywhere outside it
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('mobileMenu');
+  if (!menu.classList.contains('hidden') && !e.target.closest('#mobileMenu, #menuBtn')) toggleMobileMenu(true);
+});
 
 // Portfolio Filter
 function filterVideos(category, btn) {
@@ -1519,6 +1681,9 @@ function filterVideos(category, btn) {
     const categories = card.getAttribute('data-category');
     if (category === 'all' || (categories && categories.includes(category))) {
       card.style.display = 'block';
+      card.classList.remove('pop');
+      void card.offsetWidth; // restart the pop-in animation
+      card.classList.add('pop');
     } else {
       card.style.display = 'none';
     }
@@ -1534,6 +1699,7 @@ function openYtModal(videoId, title) {
   titleEl.innerText = title;
   iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
   modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeYtModal() {
@@ -1541,7 +1707,16 @@ function closeYtModal() {
   const iframe = document.getElementById('modalIframe');
   iframe.src = '';
   modal.classList.add('hidden');
+  document.body.style.overflow = '';
 }
+
+// Close the video with Esc or by clicking the dark backdrop
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('ytModal').classList.contains('hidden')) closeYtModal();
+});
+document.getElementById('ytModal').addEventListener('click', (e) => {
+  if (e.target.id === 'ytModal') closeYtModal();
+});
 
 // Typewriter Effect
 const roles = ["Video Editor", "Motion Designer", "Colorist", "Sound Designer"];
@@ -1594,6 +1769,9 @@ window.addEventListener('scroll', () => {
     else nav.classList.remove('scrolled');
   }
 
+  const toTop = document.getElementById('toTop');
+  if (toTop) toTop.classList.toggle('show', scrollCurrent > 700);
+
   // Calculate Timecode
   const totalFrames = Math.floor((percentage / 100) * 3600);
   const hrs = String(Math.floor(totalFrames / 3600)).padStart(2, '0');
@@ -1618,15 +1796,116 @@ setInterval(() => {
 }, 40);
 
 // Intersection Observer for Scroll Reveals
+// Stagger cards inside grids so they cascade in
+document.querySelectorAll('#portfolioGrid, #about .grid, #skills .grid, #experience .space-y-12').forEach(grid => {
+  [...grid.children].filter(c => c.classList.contains('reveal'))
+    .forEach((c, i) => c.style.setProperty('--d', (i % 3) * 110 + 'ms'));
+});
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('in');
+      const el = entry.target;
+      el.classList.add('in');
+      // drop the stagger delay afterwards so hover effects respond instantly
+      setTimeout(() => el.classList.add('settled'), 1300);
+      observer.unobserve(el);
     }
   });
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal, .reveal-scale').forEach(el => observer.observe(el));
+
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+// Count-up numbers (100+, 4+, 40+)
+function countUp(el) {
+  const end = +el.dataset.count;
+  if (reduceMotion) { el.textContent = end; return; }
+  const t0 = performance.now(), dur = 1600;
+  const step = (t) => {
+    const p = Math.min(1, (t - t0) / dur);
+    el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(step);
+  };
+  el.textContent = '0';
+  requestAnimationFrame(step);
+}
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { countUp(entry.target); countObserver.unobserve(entry.target); }
+  });
+}, { threshold: 0.6 });
+document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+
+// Skill bars fill from zero when the list scrolls into view
+const skillList = document.getElementById('skillList');
+if (skillList) {
+  const fills = [...skillList.querySelectorAll('.skill-bar-fill')];
+  fills.forEach(f => { f.dataset.w = f.style.width; f.style.width = '0%'; });
+  const skillObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      fills.forEach((f, i) => setTimeout(() => { f.style.width = f.dataset.w; }, i * 140));
+      skillObserver.disconnect();
+    }
+  }, { threshold: 0.3 });
+  skillObserver.observe(skillList);
+}
+
+// Highlight the nav link of the section currently on screen
+const navLinks = document.querySelectorAll('#navbar .nav-link');
+const spy = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+    }
+  });
+}, { rootMargin: '-45% 0px -50% 0px' });
+document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
+
+// Show how many videos each portfolio filter holds
+document.querySelectorAll('.yt-filter-btn').forEach(btn => {
+  const cat = (btn.getAttribute('onclick').match(/'([^']+)'/) || [])[1];
+  const n = [...document.querySelectorAll('.yt-card')].filter(c => cat === 'all' || (c.dataset.category || '').includes(cat)).length;
+  btn.insertAdjacentHTML('beforeend', ` <span class="filter-count">${n}</span>`);
+});
+
+if (finePointer && !reduceMotion) {
+  // Cursor glow + glass spotlight that follows the pointer
+  const glow = document.getElementById('cursorGlow');
+  let lastGlass = null;
+  document.addEventListener('pointermove', (e) => {
+    glow.classList.add('on');
+    glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    const g = e.target.closest('.glass, .glass-strong');
+    if (lastGlass && lastGlass !== g) { lastGlass.style.removeProperty('--mx'); lastGlass.style.removeProperty('--my'); }
+    if (g) {
+      const r = g.getBoundingClientRect();
+      g.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      g.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }
+    lastGlass = g;
+  }, { passive: true });
+  document.addEventListener('pointerleave', () => glow.classList.remove('on'));
+
+  // 3D tilt on the hero card and video cards
+  document.querySelectorAll('.yt-card').forEach(c => { c.dataset.tilt = 6; });
+  document.querySelectorAll('[data-tilt]').forEach(el => {
+    const max = +el.dataset.tilt || 8;
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      el.classList.add('tilting');
+      el.style.transform = `perspective(900px) rotateX(${(-y * max).toFixed(2)}deg) rotateY(${(x * max).toFixed(2)}deg) translateY(-4px)`;
+    });
+    el.addEventListener('pointerleave', () => {
+      el.classList.remove('tilting');
+      el.style.transform = '';
+    });
+  });
+}
 
 window.onload = function() {
   typeEffect();
@@ -1675,7 +1954,7 @@ async function submitContactForm(event) {
     form.submit();
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>Send Message</span> <i class="fa-solid fa-paper-plane text-xs"></i>';
+    btn.innerHTML = '<span>Send Message Now</span> <i class="fa-solid fa-paper-plane text-sm"></i>';
   }
 }
 </script>
