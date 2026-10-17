@@ -1188,6 +1188,42 @@
         </div>
       </div>
 
+      <!-- Facebook Reel (preview is the live FB embed, so no thumbnail file to host) -->
+      <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="ads">
+        <div class="relative aspect-video overflow-hidden cursor-pointer bg-black" onclick="openFbModal('https://www.facebook.com/reel/2687717704997170', 'Meta Ad Campaign 11', '1 / 1')">
+          <iframe loading="lazy" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2687717704997170&show_text=false" title="Meta Ad Campaign 11 preview" tabindex="-1" class="absolute inset-0 w-full h-full pointer-events-none group-hover:scale-105 transition-transform duration-500" style="border:0" scrolling="no"></iframe>
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-0)] via-transparent to-black/30 opacity-80 group-hover:opacity-60 transition-opacity"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-12 h-12 rounded-full bg-blue-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-blue-600 transition-all duration-300">
+              <i class="fa-solid fa-play text-lg ml-0.5"></i>
+            </div>
+          </div>
+          <span class="absolute top-3 left-3 bg-blue-600/90 text-white font-mono text-[10px] px-2.5 py-1 rounded-md font-bold tracking-wider flex items-center gap-1">
+            <i class="fa-brands fa-meta"></i> META AD
+          </span>
+          <span class="absolute top-3 right-3 bg-black/60 text-white font-mono text-[10px] px-2 py-1 rounded-md flex items-center gap-1">
+            <i class="fa-brands fa-facebook"></i> REEL
+          </span>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-mono text-[11px] text-blue-400 font-semibold">Meta Campaign</span>
+            <span class="text-[10px] text-[var(--text-3)] font-mono">Facebook Reel</span>
+          </div>
+          <h3 class="text-base font-bold text-[var(--text-0)] group-hover:text-[var(--primary)] transition-colors mb-3">
+            Meta Ad Commercial 11
+          </h3>
+          <div class="flex items-center gap-2">
+            <button onclick="openFbModal('https://www.facebook.com/reel/2687717704997170', 'Meta Ad Campaign 11', '1 / 1')" class="btn-primary text-white text-xs px-3.5 py-1.5 rounded-lg font-medium flex items-center gap-1.5">
+              <i class="fa-solid fa-play text-[10px]"></i> Play
+            </button>
+            <a href="https://www.facebook.com/reel/2687717704997170" target="_blank" rel="noopener" class="btn-ghost text-[var(--text-2)] hover:text-white text-xs px-3 py-1.5 rounded-lg font-mono flex items-center gap-1">
+              Facebook <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <!-- Talking Head -->
       <div class="yt-card reveal glass rounded-2xl overflow-hidden group border border-[var(--line)] hover:border-[var(--primary)] transition-all duration-300" data-category="talking-head">
         <div class="relative aspect-video overflow-hidden cursor-pointer" onclick="openYtModal('E-3AuuuTRtg', 'Talking Head Video 01')">
@@ -1629,12 +1665,12 @@
 
 <!-- YouTube Video Modal -->
 <div id="ytModal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="relative w-full max-w-4xl glass-strong rounded-3xl overflow-hidden border border-[var(--line-strong)]">
+  <div id="modalBox" class="relative w-full max-w-4xl glass-strong rounded-3xl overflow-hidden border border-[var(--line-strong)]">
     <div class="flex items-center justify-between px-6 py-4 border-b border-[var(--line)]">
       <h3 id="modalTitle" class="text-sm font-semibold text-[var(--text-0)] font-mono">Video Player</h3>
       <button onclick="closeYtModal()" aria-label="Close video" class="text-[var(--text-2)] hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div class="aspect-video w-full">
+    <div id="modalFrame" class="aspect-video w-full">
       <iframe id="modalIframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
@@ -1698,6 +1734,28 @@ function openYtModal(videoId, title) {
   
   titleEl.innerText = title;
   iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  setModalShape(null);
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+// Facebook videos come in different shapes, so the player frame takes the video's
+// aspect ratio (e.g. '1 / 1', '9 / 16') and is sized to always fit the screen height
+function setModalShape(ratio) {
+  const box = document.getElementById('modalBox');
+  const frame = document.getElementById('modalFrame');
+  if (!ratio) { box.style.maxWidth = ''; frame.style.aspectRatio = ''; return; }
+  const [w, h] = ratio.split('/').map(Number);
+  frame.style.aspectRatio = ratio;
+  box.style.maxWidth = `min(${w >= h ? 640 : 380}px, calc(78vh * ${w} / ${h}))`;
+}
+
+function openFbModal(reelUrl, title, ratio = '9 / 16') {
+  const modal = document.getElementById('ytModal');
+  setModalShape(ratio);
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalIframe').src =
+    'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(reelUrl) + '&show_text=false&autoplay=true';
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 }
